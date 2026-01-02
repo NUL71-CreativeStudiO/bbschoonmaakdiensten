@@ -6,19 +6,19 @@ import { useNavigate } from 'react-router-dom';
 
 const HERO_SLIDES = [
   { 
-    src: "/public/BB_image1.png",
+    src: "/BB_image1.png",
     title: "Professioneel Team",
     subtitle: "Vakkundig en gecertificeerd.",
     icon: Users
   },
   { 
-    src: "/public/BB_image4.png",
+    src: "/BB_image4.png",
     title: "Representatieve Entrees",
     subtitle: "Een perfecte eerste indruk.",
     icon: Building2
   },
   { 
-    src: "/public/BB_image5.png",
+    src: "/BB_image5.png",
     title: "Grondige Reiniging",
     subtitle: "Oog voor elk detail.",
     icon: Sparkles

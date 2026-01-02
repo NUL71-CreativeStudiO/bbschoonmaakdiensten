@@ -59,7 +59,7 @@ export const Navbar: React.FC = () => {
           {/* Brand */}
           <Link to="/" className="flex items-center gap-3 group" onClick={(e) => handleNavClick(e, NAV_ITEMS[0])}>
             <img 
-              src="/public/BB_logo_trans.png" 
+              src="/BB_logo_trans.png" 
               alt="B&B Schoonmaakdiensten" 
               className={`transition-all duration-300 ${isScrolled || !isHome ? 'h-10' : 'h-14'} w-auto`}
             />

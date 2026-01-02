@@ -6,19 +6,19 @@ import { useNavigate } from 'react-router-dom';
 
 const HERO_SLIDES = [
   { 
-    src: "https://raw.githubusercontent.com/NUL71-CreativeStudiO/bbschoonmaakdiensten/refs/heads/main/public/images/BB_image5.png",
+    src: "/public/BB_image1.png",
     title: "Professioneel Team",
     subtitle: "Vakkundig en gecertificeerd.",
     icon: Users
   },
   { 
-    src: "https://github.com/NUL71-CreativeStudiO/bbschoonmaakdiensten/blob/main/public/images/BB_image2.png?raw=true",
+    src: "/public/BB_image4.png",
     title: "Representatieve Entrees",
     subtitle: "Een perfecte eerste indruk.",
     icon: Building2
   },
   { 
-    src: "https://raw.githubusercontent.com/NUL71-CreativeStudiO/bbschoonmaakdiensten/refs/heads/main/public/images/BB_image1.png",
+    src: "/public/BB_image5.png",
     title: "Grondige Reiniging",
     subtitle: "Oog voor elk detail.",
     icon: Sparkles

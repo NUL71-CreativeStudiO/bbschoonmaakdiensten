@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Navbar } from './components/Navbar';
@@ -106,12 +106,14 @@ const Home = () => (
 );
 
 function App() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <HelmetProvider>
       <Router>
         <ScrollHandler />
         <div className="min-h-screen bg-slate-50 font-sans flex flex-col relative overflow-x-hidden">
-          <Navbar />
+          <Navbar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />
@@ -157,7 +159,7 @@ function App() {
             </Routes>
           </main>
           <Footer />
-          <WhatsAppButton />
+          <WhatsAppButton hide={mobileMenuOpen} />
           <CookieConsent />
         </div>
       </Router>

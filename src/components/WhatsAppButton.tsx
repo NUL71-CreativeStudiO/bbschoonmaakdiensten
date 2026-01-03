@@ -24,7 +24,11 @@ const RE_ENGAGEMENT_MESSAGES = [
 const STORAGE_KEY = 'bb_whatsapp_closed_ts';
 const COOLDOWN_PERIOD = 24 * 60 * 60 * 1000; // 24 Hours in milliseconds
 
-export const WhatsAppButton: React.FC = () => {
+interface WhatsAppButtonProps {
+  hide?: boolean;
+}
+
+export const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({ hide }) => {
   const phoneNumber = '31850473030'; 
   const message = 'Hallo, ik heb een vraag over B&B Schoonmaakdiensten.';
   const [showBubble, setShowBubble] = useState(false);
@@ -90,11 +94,12 @@ export const WhatsAppButton: React.FC = () => {
   return (
     // Fixed container positioned at bottom right
     // Align items in a row on ALL screen sizes (mobile included)
-    <div className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[50] flex flex-row items-center gap-4 pointer-events-none">
+    // Controlled by 'hide' prop: makes it invisible and unclickable when true
+    <div className={`fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[50] flex flex-row items-center gap-4 pointer-events-none transition-all duration-300 ${hide ? 'opacity-0 invisible' : 'opacity-100 visible'}`}>
       
       {/* Chat Message Bubble */}
       <AnimatePresence>
-        {showBubble && (
+        {showBubble && !hide && (
           <motion.div
             initial={{ opacity: 0, x: 10, scale: 0.9 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}

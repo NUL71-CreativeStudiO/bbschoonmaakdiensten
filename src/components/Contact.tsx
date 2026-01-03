@@ -46,25 +46,25 @@ export const Contact: React.FC = () => {
 
   return (
     <Section id="contact" className="bg-primary text-white" noPadding>
-      <div className={`container mx-auto px-4 md:px-6 py-20 lg:py-28 ${isPage ? 'pt-32' : ''}`}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+      <div className={`container mx-auto px-4 md:px-6 py-16 md:py-20 lg:py-28 ${isPage ? 'pt-32' : ''}`}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24">
           
           {/* Info */}
-          <div className="flex flex-col justify-center">
+          <div className="flex flex-col justify-center text-center lg:text-left">
             <span className="text-secondary font-bold uppercase tracking-wider text-sm mb-2">Contact</span>
-            <h2 className="text-4xl lg:text-5xl font-heading font-extrabold mb-8">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-extrabold mb-6 lg:mb-8">
               Klaar voor een <br/><span className="text-secondary">frisse start?</span>
             </h2>
-            <p className="text-blue-100 text-lg mb-12 max-w-md leading-relaxed">
+            <p className="text-blue-100 text-base md:text-lg mb-8 lg:mb-12 max-w-md mx-auto lg:mx-0 leading-relaxed">
               Neem contact op voor een kennismaking of vraag direct een offerte aan. Wij reageren doorgaans binnen één werkdag.
             </p>
 
             <div className="space-y-6">
-              <div className="flex items-center gap-6 p-4 bg-white/5 rounded-xl border border-white/10">
+              <div className="flex items-center gap-6 p-4 bg-white/5 rounded-xl border border-white/10 justify-center lg:justify-start">
                 <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-white shrink-0">
                   <Phone size={20} />
                 </div>
-                <div>
+                <div className="text-left">
                   <div className="text-xs text-blue-200 uppercase font-bold tracking-wider">Bel ons</div>
                   <a href="tel:0850473030" className="text-xl font-bold hover:text-secondary transition-colors">085 - 047 30 30</a>
                 </div>
@@ -73,7 +73,7 @@ export const Contact: React.FC = () => {
           </div>
 
           {/* Form Card */}
-          <div className="bg-white rounded-2xl shadow-2xl p-8 lg:p-10 text-slate-800">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-8 lg:p-10 text-slate-800">
             <h3 className="text-2xl font-bold mb-6 text-slate-900">Stuur een bericht</h3>
             
             <AnimatePresence mode="wait">
@@ -96,12 +96,12 @@ export const Contact: React.FC = () => {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   onSubmit={handleSubmit(onSubmit)} 
-                  className="space-y-5"
+                  className="space-y-4 md:space-y-5"
                 >
                   {/* Honeypot Field (Hidden) */}
                   <input type="text" className="hidden" tabIndex={-1} autoComplete="off" {...register("_honey")} />
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
                     <div>
                       <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">Naam</label>
                       <input 

@@ -110,7 +110,7 @@ export const Reviews: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 relative min-h-[200px]">
+      <div className="flex flex-nowrap overflow-x-auto pb-8 -mx-4 px-4 snap-x snap-mandatory gap-4 md:grid md:grid-cols-3 md:gap-6 lg:gap-8 relative min-h-[200px] md:overflow-visible md:pb-0 md:mx-0 md:px-0 no-scrollbar">
         {/* Loading Overlay (Optional: only visible if fetching takes > 0ms and we want to show it) */}
         {loading && (
            <div className="absolute inset-0 bg-white/80 z-10 flex items-center justify-center">
@@ -119,7 +119,7 @@ export const Reviews: React.FC = () => {
         )}
 
         {displayReviews.slice(0, 3).map((review) => (
-           <div key={review.id} className="bg-white p-8 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow relative flex flex-col h-full">
+           <div key={review.id} className="min-w-[85vw] w-[85vw] md:min-w-0 md:w-auto flex-shrink-0 snap-center bg-white p-8 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow relative flex flex-col h-full">
               {/* Google Header */}
               <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-50">
                 <div className="flex items-center gap-2">
@@ -154,7 +154,7 @@ export const Reviews: React.FC = () => {
         ))}
       </div>
 
-      <div className="mt-12 text-center">
+      <div className="mt-0 md:mt-12 text-center">
          <Button 
             variant="outline" 
             onClick={() => window.open(GOOGLE_REVIEW_URL, '_blank')}

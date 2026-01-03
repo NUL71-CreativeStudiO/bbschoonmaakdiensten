@@ -12,13 +12,13 @@ export const Section: React.FC<SectionProps> = ({ id, className = '', children, 
   return (
     <section 
       id={id} 
-      className={`relative w-full overflow-hidden ${noPadding ? '' : 'py-20 md:py-28'} ${className}`}
+      className={`relative w-full overflow-hidden ${noPadding ? '' : 'py-16 md:py-24 lg:py-28'} ${className}`}
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6 }}
+        viewport={{ once: true, margin: "-50px" }} // Trigger earlier on mobile
+        transition={{ duration: 0.5 }}
         className="container mx-auto px-4 md:px-6 max-w-7xl"
       >
         {children}

@@ -89,16 +89,17 @@ export const WhatsAppButton: React.FC = () => {
 
   return (
     // Fixed container positioned at bottom right
-    <div className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[50] flex flex-col items-end sm:flex-row sm:items-center gap-4 pointer-events-none">
+    // Align items in a row on ALL screen sizes (mobile included)
+    <div className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[50] flex flex-row items-center gap-4 pointer-events-none">
       
       {/* Chat Message Bubble */}
       <AnimatePresence>
         {showBubble && (
           <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
+            initial={{ opacity: 0, x: 10, scale: 0.9 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-            className="pointer-events-auto bg-white text-slate-800 px-5 py-4 rounded-2xl shadow-xl border border-slate-100 max-w-[280px] md:max-w-[300px] relative mb-2 sm:mb-0 sm:mr-2 flex flex-col justify-center min-h-[80px]"
+            className="pointer-events-auto bg-white text-slate-800 px-5 py-4 rounded-2xl shadow-xl border border-slate-100 max-w-[220px] md:max-w-[300px] relative flex flex-col justify-center min-h-[80px]"
           >
              {/* Close Button */}
              <button 
@@ -130,11 +131,8 @@ export const WhatsAppButton: React.FC = () => {
                </div>
              </div>
 
-             {/* Arrow pointing to button (Desktop) */}
-             <div className="hidden sm:block absolute top-1/2 -right-2.5 -translate-y-1/2 w-0 h-0 border-t-[8px] border-t-transparent border-l-[10px] border-l-white border-b-[8px] border-b-transparent drop-shadow-sm"></div>
-             
-             {/* Arrow pointing to button (Mobile) */}
-             <div className="block sm:hidden absolute -bottom-2 right-6 w-0 h-0 border-l-[8px] border-l-transparent border-t-[10px] border-t-white border-r-[8px] border-r-transparent drop-shadow-sm"></div>
+             {/* Arrow pointing to button (Right side of bubble) */}
+             <div className="absolute top-1/2 -right-2.5 -translate-y-1/2 w-0 h-0 border-t-[8px] border-t-transparent border-l-[10px] border-l-white border-b-[8px] border-b-transparent drop-shadow-sm"></div>
           </motion.div>
         )}
       </AnimatePresence>

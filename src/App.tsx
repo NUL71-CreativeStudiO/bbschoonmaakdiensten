@@ -110,7 +110,7 @@ function App() {
     <HelmetProvider>
       <Router>
         <ScrollHandler />
-        <div className="min-h-screen bg-slate-50 font-sans flex flex-col relative">
+        <div className="min-h-screen bg-slate-50 font-sans flex flex-col relative overflow-x-hidden">
           <Navbar />
           <main className="flex-grow">
             <Routes>

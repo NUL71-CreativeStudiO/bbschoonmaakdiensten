@@ -31,7 +31,7 @@ export const JobDetail: React.FC = () => {
       "@type": "Organization",
       "name": "B&B Schoonmaakdiensten",
       "sameAs": BASE_URL,
-      "logo": "/BB_logo_trans.png"
+      "logo": "https://bbschoonmaak.nul71.nl/wp-content/uploads/2025/12/cropped-BB-Trans-from-Photopea.png"
     },
     "jobLocation": {
       "@type": "Place",

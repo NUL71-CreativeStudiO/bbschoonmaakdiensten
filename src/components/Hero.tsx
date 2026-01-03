@@ -6,19 +6,19 @@ import { useNavigate } from 'react-router-dom';
 
 const HERO_SLIDES = [
   { 
-    src: "/BB_image1.png",
+    src: "https://raw.githubusercontent.com/NUL71-CreativeStudiO/bbschoonmaakdiensten/refs/heads/main/public/images/BB_image5.png",
     title: "Professioneel Team",
     subtitle: "Vakkundig en gecertificeerd.",
     icon: Users
   },
   { 
-    src: "/BB_image4.png",
+    src: "https://github.com/NUL71-CreativeStudiO/bbschoonmaakdiensten/blob/main/public/images/BB_image2.png?raw=true",
     title: "Representatieve Entrees",
     subtitle: "Een perfecte eerste indruk.",
     icon: Building2
   },
   { 
-    src: "/BB_image5.png",
+    src: "https://raw.githubusercontent.com/NUL71-CreativeStudiO/bbschoonmaakdiensten/refs/heads/main/public/images/BB_image1.png",
     title: "Grondige Reiniging",
     subtitle: "Oog voor elk detail.",
     icon: Sparkles
@@ -46,8 +46,8 @@ export const Hero: React.FC = () => {
   const CurrentIcon = HERO_SLIDES[currentSlideIndex].icon;
 
   return (
-    // Z-20 ensures it sits above the next section (About) so drops can overlay it.
-    <div id="home" className="relative w-full min-h-[92vh] flex items-center bg-slate-50 pt-24 lg:pt-0 z-20">
+    // Updated min-h to svh (Small Viewport Height) for better mobile browser support
+    <div id="home" className="relative w-full min-h-[100svh] md:min-h-[92vh] flex items-center bg-slate-50 pt-20 lg:pt-0 z-20 overflow-hidden">
       
       {/* 1. BACKGROUND: Office Company Faded + Blue Tint for Water Drop Theme */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -71,38 +71,39 @@ export const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/40 to-slate-50"></div>
       </div>
 
-      <div className="container mx-auto px-6 md:px-12 relative z-10 pb-20 lg:pb-0">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="container mx-auto px-4 md:px-6 lg:px-12 relative z-10 pb-16 lg:pb-0">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           
           {/* LEFT: Typography & CTA */}
+          {/* Changed order: Text first on mobile (order-1), then Image (order-2) */}
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="order-2 lg:order-1 max-w-xl"
+            className="order-1 lg:order-1 max-w-xl mx-auto lg:mx-0 text-center lg:text-left pt-6 lg:pt-0"
           >
             {/* Tagline */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 border border-slate-200 backdrop-blur-sm shadow-sm mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 border border-slate-200 backdrop-blur-sm shadow-sm mb-6 lg:mb-8">
                <span className="w-1.5 h-1.5 rounded-full bg-secondary"></span>
                <span className="text-xs font-bold text-slate-500 tracking-wider uppercase">Schoonmaak & Onderhoud</span>
             </div>
 
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-black text-slate-900 leading-[1.1] mb-6 tracking-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-black text-slate-900 leading-[1.1] mb-4 lg:mb-6 tracking-tight">
               De kunst van <br />
               <span className="text-primary whitespace-nowrap">
                 schoon werken.
               </span>
             </h1>
 
-            <p className="text-lg md:text-xl text-slate-600 mb-10 leading-relaxed font-medium">
+            <p className="text-base sm:text-lg md:text-xl text-slate-600 mb-8 lg:mb-10 leading-relaxed font-medium px-2 lg:px-0">
               B&B Schoonmaakdiensten zorgt voor een representatieve en hygiënische omgeving. 
               Betrouwbaar maatwerk voor de moderne zakelijke markt.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-5 mb-10">
+            <div className="flex flex-col sm:flex-row gap-4 lg:gap-5 mb-8 lg:mb-10 justify-center lg:justify-start">
               <Button 
                 onClick={() => navigate('/offerte-aanvragen')} 
-                className="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-xl font-bold text-sm tracking-wide shadow-xl shadow-primary/15 transform hover:-translate-y-0.5 transition-all"
+                className="bg-primary hover:bg-primary-dark text-white px-8 py-3.5 md:py-4 rounded-xl font-bold text-sm tracking-wide shadow-xl shadow-primary/15 transform hover:-translate-y-0.5 transition-all w-full sm:w-auto"
               >
                 OFFERTE AANVRAGEN
               </Button>
@@ -112,39 +113,40 @@ export const Hero: React.FC = () => {
                   const el = document.getElementById('services');
                   if(el) el.scrollIntoView({ behavior: 'smooth'});
                 }}
-                className="bg-white/50 backdrop-blur-sm border border-slate-300 text-slate-600 hover:border-primary hover:bg-primary hover:text-white px-8 py-4 rounded-xl font-bold text-sm tracking-wide"
+                className="bg-white/50 backdrop-blur-sm border border-slate-300 text-slate-600 hover:border-primary hover:bg-primary hover:text-white px-8 py-3.5 md:py-4 rounded-xl font-bold text-sm tracking-wide w-full sm:w-auto"
               >
                 BEKIJK DIENSTEN
               </Button>
             </div>
 
             {/* Trust Indicators */}
-            <div className="flex flex-wrap items-center gap-6 md:gap-8">
-               <div className="flex items-center gap-2.5">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-2 md:gap-8">
+               <div className="flex items-center gap-2">
                  <div className="bg-green-100 p-1 rounded-full">
-                    <CheckCircle2 size={16} className="text-secondary" />
+                    <CheckCircle2 size={14} className="text-secondary" />
                  </div>
-                 <span className="text-sm font-bold text-slate-700">OSB Gecertificeerd & Erkend</span>
+                 <span className="text-sm font-bold text-slate-700">OSB Gecertificeerd</span>
                </div>
-               <div className="w-px h-8 bg-slate-300 hidden md:block"></div>
-               <div className="flex items-center gap-2.5">
+               <div className="hidden md:block w-px h-6 bg-slate-300"></div>
+               <div className="flex items-center gap-2">
                  <div className="bg-green-100 p-1 rounded-full">
-                    <CheckCircle2 size={16} className="text-secondary" />
+                    <CheckCircle2 size={14} className="text-secondary" />
                  </div>
-                 <span className="text-sm font-bold text-slate-700">Ervaren en vast team</span>
+                 <span className="text-sm font-bold text-slate-700">Vast & Ervaren Team</span>
                </div>
             </div>
           </motion.div>
 
           {/* RIGHT: WATER DROP IMAGE CONTAINER */}
-          <div className="order-1 lg:order-2 flex justify-center lg:justify-end items-center py-12 lg:py-0">
+          <div className="hidden md:flex order-2 lg:order-2 justify-center lg:justify-end items-center py-4 lg:py-0">
              
              {/* The Drop Shape Wrapper */}
              <motion.div 
                initial={{ opacity: 0, scale: 0.8 }}
                animate={{ opacity: 1, scale: 1 }}
                transition={{ duration: 1.2, delay: 0.2, type: "spring", stiffness: 50 }}
-               className="relative w-[300px] h-[300px] md:w-[450px] md:h-[450px]"
+               // Adjusted size for mobile: w-[280px] instead of larger default
+               className="relative w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] md:w-[450px] md:h-[450px]"
              >
                 {/* Background Glow */}
                 <div className="absolute inset-4 bg-primary/30 blur-3xl rounded-full transform translate-y-8"></div>
@@ -205,17 +207,17 @@ export const Hero: React.FC = () => {
                    animate={{ opacity: 1, y: 0, scale: 1 }}
                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
                    transition={{ delay: 0.2, type: "spring", stiffness: 100 }}
-                   className="absolute -bottom-8 left-1/2 -translate-x-1/2 z-20 w-max max-w-[95%]"
+                   className="absolute -bottom-6 md:-bottom-8 left-1/2 -translate-x-1/2 z-20 w-max max-w-[90%]"
                 >
-                   <div className="flex items-center gap-4 bg-white/95 backdrop-blur-md px-6 py-4 rounded-2xl shadow-[0_20px_40px_-12px_rgba(0,0,0,0.15)] border border-white">
-                      <div className="w-12 h-12 bg-blue-50 text-primary rounded-xl flex items-center justify-center shrink-0">
-                         <CurrentIcon size={24} strokeWidth={2} />
+                   <div className="flex items-center gap-3 md:gap-4 bg-white/95 backdrop-blur-md px-4 py-3 md:px-6 md:py-4 rounded-2xl shadow-[0_20px_40px_-12px_rgba(0,0,0,0.15)] border border-white">
+                      <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-50 text-primary rounded-xl flex items-center justify-center shrink-0">
+                         <CurrentIcon size={20} className="md:w-6 md:h-6" strokeWidth={2} />
                       </div>
-                      <div className="flex flex-col">
-                        <p className="text-base font-bold text-slate-900 leading-tight mb-0.5">
+                      <div className="flex flex-col text-left">
+                        <p className="text-sm md:text-base font-bold text-slate-900 leading-tight mb-0.5">
                           {HERO_SLIDES[currentSlideIndex].title}
                         </p>
-                        <p className="text-sm text-slate-500 font-medium">
+                        <p className="text-xs md:text-sm text-slate-500 font-medium">
                           {HERO_SLIDES[currentSlideIndex].subtitle}
                         </p>
                       </div>
@@ -230,7 +232,7 @@ export const Hero: React.FC = () => {
       {/* --- BOTTOM WAVE TRANSITION (Kept Static) --- */}
       <div className="absolute bottom-0 left-0 right-0 z-50 pointer-events-none">
         <svg 
-          className="relative w-full h-16 md:h-24 text-white fill-current block z-10" 
+          className="relative w-full h-12 md:h-16 lg:h-24 text-white fill-current block z-10" 
           viewBox="0 0 1440 120" 
           preserveAspectRatio="none"
         >

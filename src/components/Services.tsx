@@ -11,17 +11,21 @@ export const Services: React.FC = () => {
 
   return (
     <Section id="services" className={`bg-slate-50 ${isPage ? 'pt-32' : ''}`}>
-      <div className="text-center max-w-3xl mx-auto mb-16">
+      <div className="text-center max-w-3xl mx-auto mb-10 md:mb-16">
         <span className="text-secondary font-bold uppercase tracking-wider text-sm">Onze Expertise</span>
         <h2 className="text-3xl md:text-4xl font-heading font-extrabold text-slate-900 mt-2 mb-4">
           Compleet Schoonmaakbeheer
         </h2>
-        <p className="text-slate-600 text-lg">
+        <p className="text-slate-600 text-base md:text-lg">
           Wij bieden een breed scala aan professionele diensten, afgestemd op de specifieke behoeften van uw organisatie.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {/* 
+         Mobile: Horizontal Scroll (Flex) with no visible scrollbar
+         Desktop: Grid
+      */}
+      <div className="flex flex-nowrap overflow-x-auto pb-8 -mx-4 px-4 snap-x snap-mandatory gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-8 md:overflow-visible md:pb-0 md:mx-0 md:px-0 no-scrollbar">
         {SERVICES.map((service, index) => (
           <motion.div
             key={service.id}
@@ -29,21 +33,22 @@ export const Services: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.1 }}
-            className="group bg-white rounded-xl p-8 shadow-soft hover:shadow-card transition-all duration-300 border-b-4 border-transparent hover:border-secondary relative overflow-hidden flex flex-col h-full"
+            // Mobile: fixed width, snap alignment
+            className="min-w-[85vw] w-[85vw] md:min-w-0 md:w-auto flex-shrink-0 snap-center h-auto group bg-white rounded-xl p-6 md:p-8 shadow-soft hover:shadow-card transition-all duration-300 border-b-4 border-transparent hover:border-secondary relative overflow-hidden flex flex-col"
           >
             {/* Hover Background Blob */}
             <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/5 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
 
             <div className="relative z-10 flex-1 flex flex-col">
-              <div className="w-14 h-14 bg-blue-50 text-primary rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-                <service.icon size={28} />
+              <div className="w-12 h-12 md:w-14 md:h-14 bg-blue-50 text-primary rounded-lg flex items-center justify-center mb-4 md:mb-6 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                <service.icon size={24} className="md:w-7 md:h-7" />
               </div>
               
-              <h3 className="text-xl font-heading font-bold text-slate-900 mb-3 group-hover:text-primary transition-colors">
+              <h3 className="text-lg md:text-xl font-heading font-bold text-slate-900 mb-3 group-hover:text-primary transition-colors">
                 {service.title}
               </h3>
               
-              <p className="text-slate-600 leading-relaxed mb-6 flex-1">
+              <p className="text-sm md:text-base text-slate-600 leading-relaxed mb-6 flex-1">
                 {service.description}
               </p>
 
@@ -57,8 +62,8 @@ export const Services: React.FC = () => {
       </div>
       
       {/* Bottom CTA */}
-      <div className="mt-16 text-center">
-        <p className="text-slate-500 mb-4">Staat uw gewenste dienst er niet tussen?</p>
+      <div className="mt-6 md:mt-16 text-center">
+        <p className="text-slate-500 mb-2 md:mb-4 text-sm md:text-base">Staat uw gewenste dienst er niet tussen?</p>
         <Link to="/offerte-aanvragen" className="inline-block border-b-2 border-primary text-primary font-bold hover:text-primary-dark hover:border-primary-dark transition-colors pb-1">
           Neem contact op voor maatwerk &rarr;
         </Link>

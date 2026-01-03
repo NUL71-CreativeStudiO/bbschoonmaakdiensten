@@ -19,6 +19,15 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [mobileMenuOpen]);
+
   const handleNavClick = (e: React.MouseEvent, item: NavItem) => {
     e.preventDefault();
     setMobileMenuOpen(false);
@@ -51,19 +60,23 @@ export const Navbar: React.FC = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white ${
-          isScrolled || !isHome ? 'shadow-md py-2' : 'shadow-sm py-4'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-sm ${
+          isScrolled || !isHome || mobileMenuOpen ? 'shadow-md py-3' : 'shadow-sm py-4 md:py-5'
         }`}
       >
         <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
           {/* Brand */}
-          <Link to="/" className="flex items-center gap-3 group" onClick={(e) => handleNavClick(e, NAV_ITEMS[0])}>
+          <Link to="/" className="flex items-center gap-3 group relative z-50" onClick={(e) => {
+             // Close menu if clicking brand
+             if(mobileMenuOpen) setMobileMenuOpen(false);
+             handleNavClick(e, NAV_ITEMS[0]);
+          }}>
             <img 
-              src="/BB_logo_trans.png" 
+              src="https://bbschoonmaak.nul71.nl/wp-content/uploads/2025/12/cropped-BB-Trans-from-Photopea.png" 
               alt="B&B Schoonmaakdiensten" 
-              className={`transition-all duration-300 ${isScrolled || !isHome ? 'h-10' : 'h-14'} w-auto`}
+              className={`transition-all duration-300 ${isScrolled || !isHome || mobileMenuOpen ? 'h-9 md:h-10' : 'h-10 md:h-14'} w-auto`}
             />
-            <span className={`font-heading font-bold text-slate-800 tracking-tight transition-all duration-300 ${isScrolled || !isHome ? 'text-lg' : 'text-xl'}`}>
+            <span className={`font-heading font-bold text-slate-800 tracking-tight transition-all duration-300 ${isScrolled || !isHome || mobileMenuOpen ? 'text-base md:text-lg' : 'text-lg md:text-xl'}`}>
               Schoonmaakdiensten
             </span>
           </Link>
@@ -82,7 +95,7 @@ export const Navbar: React.FC = () => {
             ))}
             <a
               href="tel:0850473030"
-              className="bg-secondary hover:bg-secondary-dark text-white px-6 py-2.5 rounded-lg font-bold transition-all shadow-sm flex items-center gap-2"
+              className="bg-secondary hover:bg-secondary-dark text-white px-6 py-2.5 rounded-lg font-bold transition-all shadow-sm flex items-center gap-2 hover:shadow-lg hover:-translate-y-0.5"
             >
               <Phone size={18} />
               <span>085 - 047 30 30</span>
@@ -91,10 +104,33 @@ export const Navbar: React.FC = () => {
 
           {/* Mobile Toggle */}
           <button
-            className="md:hidden p-2 text-primary"
+            className="md:hidden p-2 text-primary z-50 focus:outline-none"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Menu"
           >
-            {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            <AnimatePresence mode="wait">
+              {mobileMenuOpen ? (
+                <motion.div
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <X size={28} />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="menu"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Menu size={28} />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </button>
         </div>
       </nav>
@@ -103,27 +139,41 @@ export const Navbar: React.FC = () => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ type: "tween" }}
-            className="fixed inset-0 z-40 bg-white md:hidden pt-24 px-6"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ type: "tween", duration: 0.3 }}
+            className="fixed inset-0 z-40 bg-white md:hidden pt-24 px-6 pb-6 flex flex-col h-[100svh]"
           >
-            <div className="flex flex-col gap-6">
-              {NAV_ITEMS.map((item) => (
-                <a
+            <div className="flex flex-col gap-6 overflow-y-auto flex-grow">
+              {NAV_ITEMS.map((item, idx) => (
+                <motion.a
                   key={item.label}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item)}
-                  className="text-2xl font-heading font-bold text-slate-800 border-b border-slate-100 pb-4"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.05 }}
+                  className="text-2xl font-heading font-bold text-slate-800 border-b border-slate-100 pb-4 active:text-primary"
                 >
                   {item.label}
-                </a>
+                </motion.a>
               ))}
+            </div>
+
+            <div className="mt-auto space-y-4 pt-6 border-t border-slate-100">
+               <a
+                href="tel:0850473030"
+                className="w-full flex items-center justify-center gap-3 border-2 border-slate-200 text-slate-700 py-3 rounded-xl font-bold text-lg"
+              >
+                <Phone size={20} className="text-secondary" />
+                <span>085 - 047 30 30</span>
+              </a>
+
               <a
                 href="/#contact"
                 onClick={(e) => handleNavClick(e, NAV_ITEMS.find(n => n.sectionId === 'contact') || NAV_ITEMS[4])}
-                className="w-full bg-secondary text-white text-center py-4 rounded-xl font-bold text-xl mt-4 block"
+                className="w-full bg-secondary text-white flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-lg shadow-lg"
               >
                 Offerte Aanvragen
               </a>

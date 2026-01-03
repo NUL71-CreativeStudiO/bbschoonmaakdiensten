@@ -20,7 +20,7 @@ export const About: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                src="/BB_image4_1.png" 
+                src="https://github.com/NUL71-CreativeStudiO/bbschoonmaakdiensten/blob/main/public/images/BB_image2.png?raw=true" 
                 className="rounded-2xl shadow-lg w-full h-64 object-cover mt-12"
                 alt="Clean office meeting room"
               />
@@ -28,7 +28,7 @@ export const About: React.FC = () => {
                 initial={{ opacity: 0, y: -20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                src="/BB_image5.png" 
+                src="https://raw.githubusercontent.com/NUL71-CreativeStudiO/bbschoonmaakdiensten/refs/heads/main/public/images/BB_image5.png" 
                 className="rounded-2xl shadow-lg w-full h-64 object-cover"
                 alt="Cleaning professional"
               />
@@ -53,18 +53,24 @@ export const About: React.FC = () => {
             <p>{ABOUT_TEXT.paragraph2}</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-             <div className="flex flex-col items-center text-center p-4 bg-slate-50 rounded-lg">
-                <Users className="text-primary mb-2" size={32} />
-                <span className="font-bold text-slate-900">Vast Team</span>
+          {/* Trust Indicators: Horizontal Row on Mobile (Small), Grid on Desktop (Large) */}
+          <div className="bg-slate-50 rounded-2xl p-4 md:bg-transparent md:p-0 grid grid-cols-3 gap-2 md:gap-6">
+             {/* Item 1 */}
+             <div className="flex flex-col items-center justify-center text-center gap-2 md:bg-slate-50 md:rounded-lg md:p-4">
+                <Users className="text-primary shrink-0 w-6 h-6 md:w-8 md:h-8" />
+                <span className="font-bold text-slate-900 text-xs md:text-base leading-tight">Vast Team</span>
              </div>
-             <div className="flex flex-col items-center text-center p-4 bg-slate-50 rounded-lg">
-                <Award className="text-primary mb-2" size={32} />
-                <span className="font-bold text-slate-900">Gecertificeerd</span>
+             
+             {/* Item 2 */}
+             <div className="flex flex-col items-center justify-center text-center gap-2 md:bg-slate-50 md:rounded-lg md:p-4 border-l border-r border-slate-200 md:border-0 px-2 md:px-0">
+                <Award className="text-primary shrink-0 w-6 h-6 md:w-8 md:h-8" />
+                <span className="font-bold text-slate-900 text-xs md:text-base leading-tight">Gecertificeerd</span>
              </div>
-             <div className="flex flex-col items-center text-center p-4 bg-slate-50 rounded-lg">
-                <ThumbsUp className="text-primary mb-2" size={32} />
-                <span className="font-bold text-slate-900">Betrouwbaar</span>
+             
+             {/* Item 3 */}
+             <div className="flex flex-col items-center justify-center text-center gap-2 md:bg-slate-50 md:rounded-lg md:p-4">
+                <ThumbsUp className="text-primary shrink-0 w-6 h-6 md:w-8 md:h-8" />
+                <span className="font-bold text-slate-900 text-xs md:text-base leading-tight">Betrouwbaar</span>
              </div>
           </div>
         </div>

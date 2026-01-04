@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useLocation, useNavigationType } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -24,6 +24,7 @@ import { BASE_URL, DEFAULT_SEO_IMAGE } from './constants';
 // Component to handle scrolling logic
 const ScrollHandler = () => {
   const { pathname, state } = useLocation();
+  const navType = useNavigationType();
 
   useEffect(() => {
     // If we have a targetId in state (from Navigation), scroll to it
@@ -42,11 +43,12 @@ const ScrollHandler = () => {
         }
       }, 100); // Small delay to ensure DOM is ready
     } 
-    // Otherwise, if it's a regular route change without specific scroll target, go to top
-    else if (!state || !(state as any).targetId) {
+    // Otherwise, if it's a regular route change (PUSH/REPLACE) without specific scroll target, go to top.
+    // We ignore POP events (back button/swipe back) to allow the browser to restore scroll position naturally.
+    else if ((!state || !(state as any).targetId) && navType !== 'POP') {
       window.scrollTo(0, 0);
     }
-  }, [pathname, state]);
+  }, [pathname, state, navType]);
 
   return null;
 }

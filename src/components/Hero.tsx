@@ -4,44 +4,38 @@ import { Button } from './ui/Button';
 import { CheckCircle2, Users, Building2, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-// Optimized Images via Weserv CDN (Converts to WebP, Resizes, Compresses)
+// DIRECTLY USE OPTIMIZED WEBP IMAGES
+// w=800 is sufficient for mobile/tablet LCP. q=75 is standard web quality.
 const HERO_SLIDES = [
   { 
-    src: "/BB_image1.png?w=1000&h=1000&fit=cover&q=80&output=webp",
+    src: "/BB_image1.webp",
     title: "Professioneel Team",
     subtitle: "Vakkundig en gecertificeerd.",
     icon: Users
   },
   { 
-    src: "/BB_image3.png?w=1000&h=1000&fit=cover&q=80&output=webp",
+    src: "/BB_image3.webp",
     title: "Representatieve Entrees",
     subtitle: "Een perfecte eerste indruk.",
     icon: Building2
   },
   { 
-    src: "/BB_image4.png?w=1000&h=1000&fit=cover&q=80&output=webp",
+    src: "/BB_image5.webp",
     title: "Grondige Reiniging",
     subtitle: "Oog voor elk detail.",
     icon: Sparkles
   },
 ];
 
-const FALLBACK_IMAGES = [
-  "https://images.unsplash.com/photo-1497366216548-37526070297c?q=60&w=800&auto=format&fit=crop"
-];
-
-const OPTIMIZED_BG = "https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=50&w=1200&auto=format&fit=crop&fm=webp";
+const OPTIMIZED_BG = "https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=50&w=800&auto=format&fit=crop&fm=webp";
 
 export const Hero: React.FC = () => {
   const navigate = useNavigate();
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const [imgError, setImgError] = useState(false);
 
-  // Slow rotation (8 seconds)
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlideIndex((prev) => (prev + 1) % HERO_SLIDES.length);
-      setImgError(false);
     }, 8000); 
     return () => clearInterval(interval);
   }, []);
@@ -49,28 +43,21 @@ export const Hero: React.FC = () => {
   const CurrentIcon = HERO_SLIDES[currentSlideIndex].icon;
 
   return (
-    // Updated min-h to svh (Small Viewport Height) for better mobile browser support
     <div id="home" className="relative w-full min-h-[100svh] md:min-h-[92vh] flex items-center bg-slate-50 pt-20 lg:pt-0 z-20 overflow-hidden">
       
       {/* 1. BACKGROUND */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.5 }}
-          className="absolute inset-0"
-        >
+        <div className="absolute inset-0">
             <img 
               src={OPTIMIZED_BG}
-              alt="Kantoor Achtergrond" 
+              alt="" 
               className="w-full h-full object-cover opacity-30"
-              width="1200"
-              height="800"
-              loading="eager" 
-              decoding="async"
+              width="800"
+              height="600"
+              fetchPriority="low"
             />
             <div className="absolute inset-0 bg-blue-900/10 mix-blend-color"></div>
-        </motion.div>
+        </div>
         
         <div className="absolute inset-0 bg-gradient-to-r from-slate-50/95 via-slate-50/70 to-slate-50/30"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/40 to-slate-50"></div>
@@ -79,11 +66,11 @@ export const Hero: React.FC = () => {
       <div className="container mx-auto px-4 md:px-6 lg:px-12 relative z-10 pb-16 lg:pb-0">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           
-          {/* LEFT: Typography & CTA */}
+          {/* LEFT: Typography */}
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.5 }}
             className="order-1 lg:order-1 max-w-xl mx-auto lg:mx-0 text-center lg:text-left pt-6 lg:pt-0"
           >
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 border border-slate-200 backdrop-blur-sm shadow-sm mb-6 lg:mb-8">
@@ -106,7 +93,7 @@ export const Hero: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4 lg:gap-5 mb-8 lg:mb-10 justify-center lg:justify-start">
               <Button 
                 onClick={() => navigate('/offerte-aanvragen')} 
-                className="bg-primary hover:bg-primary-dark text-white px-8 py-3.5 md:py-4 rounded-xl font-bold text-sm tracking-wide shadow-xl shadow-primary/15 transform hover:-translate-y-0.5 transition-all w-full sm:w-auto"
+                className="bg-primary hover:bg-primary-dark text-white px-8 py-3.5 md:py-4 rounded-xl font-bold text-sm tracking-wide shadow-xl shadow-primary/15 w-full sm:w-auto"
               >
                 OFFERTE AANVRAGEN
               </Button>
@@ -143,73 +130,39 @@ export const Hero: React.FC = () => {
           <div className="hidden md:flex order-2 lg:order-2 justify-center lg:justify-end items-center py-4 lg:py-0">
              
              <motion.div 
-               initial={{ opacity: 0, scale: 0.8 }}
+               initial={{ opacity: 0, scale: 0.9 }}
                animate={{ opacity: 1, scale: 1 }}
-               transition={{ duration: 1.2, delay: 0.2, type: "spring", stiffness: 50 }}
+               transition={{ duration: 0.8 }}
                className="relative w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] md:w-[450px] md:h-[450px]"
              >
                 <div className="absolute inset-4 bg-primary/30 blur-3xl rounded-full transform translate-y-8"></div>
 
-                <motion.div 
-                   animate={{ 
-                     y: [0, -15, 0],
-                     rotate: 45 
-                   }}
-                   initial={{ rotate: 45 }}
-                   transition={{ 
-                     y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
-                     rotate: { duration: 0 } 
-                   }}
-                   className="relative w-full h-full overflow-hidden bg-blue-50 border-4 border-white/50"
+                <div 
+                   className="relative w-full h-full overflow-hidden bg-blue-50 border-4 border-white/50 transform rotate-45"
                    style={{
                        borderRadius: "0% 50% 50% 50%", 
-                       boxShadow: `
-                         10px 10px 40px rgba(0,75,141,0.25), 
-                         inset 20px 20px 60px rgba(255,255,255,0.8),
-                         inset -20px -20px 60px rgba(0,0,0,0.1)
-                       `
+                       boxShadow: `10px 10px 40px rgba(0,75,141,0.25)`
                    }}
                 >
                     <AnimatePresence mode="wait">
                        <motion.img 
                           key={currentSlideIndex}
-                          src={imgError ? FALLBACK_IMAGES[0] : HERO_SLIDES[currentSlideIndex].src}
-                          onError={() => setImgError(true)}
+                          src={HERO_SLIDES[currentSlideIndex].src}
                           alt="Schoonmaak"
                           width="450"
                           height="450"
-                          // Critical LCP Fix: High priority for first image
-                          fetchPriority={currentSlideIndex === 0 ? "high" : "auto"}
-                          // Critical LCP Fix: No initial fade-in for the first slide to speed up paint
-                          initial={currentSlideIndex === 0 ? { opacity: 1, rotate: -45, scale: 1.5 } : { opacity: 0, rotate: -45, scale: 1.5 }}
-                          animate={{ opacity: 1, rotate: -45, scale: 1.5 }}
-                          exit={{ opacity: 0, rotate: -45, scale: 1.5 }}
-                          transition={{ duration: 1.5 }} 
-                          className="w-full h-full object-cover"
-                          style={{ objectPosition: "center" }}
+                          fetchPriority={currentSlideIndex === 0 ? "high" : "low"}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.5 }} 
+                          className="w-full h-full object-cover transform -rotate-45 scale-125"
                        />
                     </AnimatePresence>
+                </div>
 
-                    <div 
-                        className="absolute inset-0 pointer-events-none z-10"
-                        style={{
-                            background: "linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.1) 50%, transparent 100%)",
-                            mixBlendMode: "overlay"
-                        }}
-                    ></div>
-                    
-                    <div className="absolute top-8 left-8 w-32 h-32 bg-gradient-to-br from-white to-transparent opacity-60 rounded-full blur-2xl filter transform -translate-x-1/4 -translate-y-1/4"></div>
-                </motion.div>
-
-                <motion.div 
-                   key={`info-${currentSlideIndex}`}
-                   initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                   animate={{ opacity: 1, y: 0, scale: 1 }}
-                   exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                   transition={{ delay: 0.2, type: "spring", stiffness: 100 }}
-                   className="absolute -bottom-6 md:-bottom-8 left-1/2 -translate-x-1/2 z-20 w-max max-w-[90%]"
-                >
-                   <div className="flex items-center gap-3 md:gap-4 bg-white/95 backdrop-blur-md px-4 py-3 md:px-6 md:py-4 rounded-2xl shadow-[0_20px_40px_-12px_rgba(0,0,0,0.15)] border border-white">
+                <div className="absolute -bottom-6 md:-bottom-8 left-1/2 -translate-x-1/2 z-20 w-max max-w-[90%]">
+                   <div className="flex items-center gap-3 md:gap-4 bg-white/95 backdrop-blur-md px-4 py-3 md:px-6 md:py-4 rounded-2xl shadow-xl border border-white">
                       <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-50 text-primary rounded-xl flex items-center justify-center shrink-0">
                          <CurrentIcon size={20} className="md:w-6 md:h-6" strokeWidth={2} />
                       </div>
@@ -222,23 +175,12 @@ export const Hero: React.FC = () => {
                         </p>
                       </div>
                    </div>
-                </motion.div>
+                </div>
 
              </motion.div>
           </div>
         </div>
       </div>
-
-      <div className="absolute bottom-0 left-0 right-0 z-50 pointer-events-none">
-        <svg 
-          className="relative w-full h-12 md:h-16 lg:h-24 text-white fill-current block z-10" 
-          viewBox="0 0 1440 120" 
-          preserveAspectRatio="none"
-        >
-          <path d="M0,64L80,58.7C160,53,320,43,480,48C640,53,800,75,960,80C1120,85,1280,75,1360,69.3L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path>
-        </svg>
-      </div>
-
     </div>
   );
 };

@@ -26,8 +26,18 @@ const ScrollHandler = () => {
   const { pathname, state } = useLocation();
   const navType = useNavigationType();
 
+  // Save scroll position for the current path before navigating away
   useEffect(() => {
-    // If we have a targetId in state (from Navigation), scroll to it
+    const saveScrollPosition = () => {
+      sessionStorage.setItem(`scrollPosition_${pathname}`, window.scrollY.toString());
+    };
+
+    window.addEventListener('scroll', saveScrollPosition);
+    return () => window.removeEventListener('scroll', saveScrollPosition);
+  }, [pathname]);
+
+  useEffect(() => {
+    // 1. Handle Scroll to Section (from Navbar)
     if (pathname === '/' && state && (state as any).targetId) {
       const targetId = (state as any).targetId;
       setTimeout(() => {
@@ -41,11 +51,23 @@ const ScrollHandler = () => {
             behavior: "smooth"
           });
         }
-      }, 100); // Small delay to ensure DOM is ready
+      }, 100);
     } 
-    // Otherwise, if it's a regular route change (PUSH/REPLACE) without specific scroll target, go to top.
-    // We ignore POP events (back button/swipe back) to allow the browser to restore scroll position naturally.
-    else if ((!state || !(state as any).targetId) && navType !== 'POP') {
+    // 2. Handle Back Navigation (Restore Scroll manually)
+    else if (navType === 'POP') {
+      const savedPosition = sessionStorage.getItem(`scrollPosition_${pathname}`);
+      if (savedPosition) {
+        // Use a small timeout to ensure DOM is ready
+        setTimeout(() => {
+          window.scrollTo({
+            top: parseInt(savedPosition, 10),
+            behavior: 'auto' // Instant jump for better UX on back
+          });
+        }, 50);
+      }
+    }
+    // 3. Handle New Navigation (Scroll to Top)
+    else {
       window.scrollTo(0, 0);
     }
   }, [pathname, state, navType]);

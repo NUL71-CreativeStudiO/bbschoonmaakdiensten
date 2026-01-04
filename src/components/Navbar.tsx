@@ -77,7 +77,7 @@ export const Navbar: React.FC<NavbarProps> = ({ mobileMenuOpen, setMobileMenuOpe
              handleNavClick(e, NAV_ITEMS[0]);
           }}>
             <img 
-              src="https://bbschoonmaak.nul71.nl/wp-content/uploads/2025/12/cropped-BB-Trans-from-Photopea.png" 
+              src="/BB_logo_trans.png" 
               alt="B&B Schoonmaakdiensten" 
               width="56"
               height="56"

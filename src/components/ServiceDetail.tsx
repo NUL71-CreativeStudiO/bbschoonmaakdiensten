@@ -54,12 +54,15 @@ export const ServiceDetail: React.FC = () => {
         path={`/diensten/${service.slug}`}
         schema={serviceSchema}
       />
-      <div className="bg-primary text-white py-16 md:py-24 relative overflow-hidden">
+      <div className="bg-primary text-white py-12 md:py-24 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/3 h-full bg-white/5 -skew-x-12 translate-x-1/2"></div>
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <span className="text-secondary font-bold uppercase tracking-wider text-sm mb-2 block">Onze Expertise</span>
-          <h1 className="text-4xl md:text-5xl font-heading font-extrabold mb-6">{service.title}</h1>
-          <p className="text-xl text-blue-100 max-w-2xl leading-relaxed">{service.description}</p>
+          {/* Updated Font Size & Word Breaking for Mobile */}
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-heading font-extrabold mb-6 break-words hyphens-auto">
+            {service.title}
+          </h1>
+          <p className="text-base md:text-xl text-blue-100 max-w-2xl leading-relaxed">{service.description}</p>
         </div>
       </div>
 

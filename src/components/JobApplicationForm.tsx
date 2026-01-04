@@ -104,7 +104,7 @@ export const JobApplicationForm: React.FC = () => {
               <span className="inline-block bg-white/20 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
                 Solliciteren
               </span>
-              <h1 className="text-2xl md:text-3xl font-heading font-extrabold mb-2 break-words">Schoonmaakmedewerker</h1>
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-extrabold mb-2 break-words">Schoonmaakmedewerker</h1>
               <p className="text-white/90 text-sm md:text-base">Regio Leiden • Parttime / Fulltime</p>
             </div>
 

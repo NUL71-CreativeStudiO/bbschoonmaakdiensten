@@ -100,7 +100,7 @@ export const OpenApplicationForm: React.FC = () => {
               <span className="inline-block bg-secondary/20 text-secondary-light px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
                 Open Sollicitatie
               </span>
-              <h1 className="text-2xl md:text-3xl font-heading font-extrabold mb-2 break-words">Jouw Toekomst bij B&B</h1>
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-extrabold mb-2 break-words">Jouw Toekomst bij B&B</h1>
               <p className="text-blue-100 text-sm md:text-base">Staat jouw droombaan er niet tussen? Vertel ons wat je zoekt.</p>
             </div>
 

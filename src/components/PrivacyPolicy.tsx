@@ -22,7 +22,8 @@ export const PrivacyPolicy: React.FC = () => {
       />
       <Section id="privacy-policy" className="bg-white">
         <div className="container mx-auto px-4 md:px-6 max-w-4xl">
-          <h1 className="text-3xl md:text-4xl font-heading font-extrabold text-slate-900 mb-8">
+          {/* Updated Header Font Size */}
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-heading font-extrabold text-slate-900 mb-8 break-words hyphens-auto">
             Privacyverklaring
           </h1>
           

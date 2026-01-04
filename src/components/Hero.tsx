@@ -4,8 +4,6 @@ import { Button } from './ui/Button';
 import { CheckCircle2, Users, Building2, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-// DIRECTLY USE OPTIMIZED WEBP IMAGES
-// w=800 is sufficient for mobile/tablet LCP. q=75 is standard web quality.
 const HERO_SLIDES = [
   { 
     src: "/BB_image1.webp",

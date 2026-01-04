@@ -84,7 +84,7 @@ export const Hero: React.FC = () => {
             </h1>
 
             <p className="text-base sm:text-lg md:text-xl text-slate-600 mb-8 lg:mb-10 leading-relaxed font-medium px-2 lg:px-0">
-              B&B Schoonmaakdiensten zorgt voor een representatieve en hygiënische omgeving. 
+              B&B !!!Schoonmaakdiensten zorgt voor een representatieve en hygiënische omgeving. 
               Betrouwbaar maatwerk voor de moderne zakelijke markt.
             </p>
 

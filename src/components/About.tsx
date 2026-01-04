@@ -9,6 +9,10 @@ export const About: React.FC = () => {
   const location = useLocation();
   const isPage = location.pathname === '/over-ons';
 
+  // Optimized image URLs via weserv.nl
+  const img1 = "/BB_image5.png&w=600&h=512&fit=cover&q=80&output=webp";
+  const img2 = "/BB_image6.png&w=600&h=512&fit=cover&q=80&output=webp";
+
   return (
     <Section id="about" className={`bg-white ${isPage ? 'pt-32' : ''}`}>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -20,17 +24,25 @@ export const About: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                src="/BB_image6.png" 
+                src={img1}
                 className="rounded-2xl shadow-lg w-full h-64 object-cover mt-12"
                 alt="Clean office meeting room"
+                width="300"
+                height="256"
+                loading="lazy"
+                decoding="async"
               />
               <motion.img 
                 initial={{ opacity: 0, y: -20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                src="/BB_image5.png" 
+                src={img2}
                 className="rounded-2xl shadow-lg w-full h-64 object-cover"
                 alt="Cleaning professional"
+                width="300"
+                height="256"
+                loading="lazy"
+                decoding="async"
               />
             </div>
             {/* Brand Circle */}

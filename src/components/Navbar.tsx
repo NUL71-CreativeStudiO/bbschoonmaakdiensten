@@ -10,6 +10,9 @@ interface NavbarProps {
   setMobileMenuOpen: (open: boolean) => void;
 }
 
+// Optimized Logo
+const LOGO_URL = "/BB_logo_trans.png&w=120&h=120&fit=contain&output=webp";
+
 export const Navbar: React.FC<NavbarProps> = ({ mobileMenuOpen, setMobileMenuOpen }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
@@ -77,7 +80,7 @@ export const Navbar: React.FC<NavbarProps> = ({ mobileMenuOpen, setMobileMenuOpe
              handleNavClick(e, NAV_ITEMS[0]);
           }}>
             <img 
-              src="/BB_logo_trans.png" 
+              src={LOGO_URL} 
               alt="B&B Schoonmaakdiensten" 
               width="56"
               height="56"

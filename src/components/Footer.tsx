@@ -2,6 +2,9 @@ import React from 'react';
 import { Facebook, Linkedin, Instagram, MapPin, Phone, Mail, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+// Optimized Logo (White version not available via CDN easily without SVG, so we use brightness filter in CSS but on a smaller optimized base image)
+const LOGO_URL = "/BB_logo_trans.png&w=120&h=120&fit=contain&output=webp";
+
 export const Footer: React.FC = () => {
   const handleResetCookies = () => {
     // Dispatch event to open CookieConsent immediately
@@ -15,9 +18,12 @@ export const Footer: React.FC = () => {
           <div className="col-span-1">
             <div className="flex items-center gap-3 mb-4">
               <img 
-                src="/BB_logo_trans.png" 
+                src={LOGO_URL}
                 alt="B&B Schoonmaakdiensten Logo" 
                 className="h-10 w-auto object-contain brightness-0 invert"
+                width="40"
+                height="40"
+                loading="lazy"
               />
               <span className="text-white font-heading font-bold text-xl tracking-tight">
                 Schoonmaakdiensten

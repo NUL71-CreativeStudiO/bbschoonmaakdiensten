@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Section } from './ui/Section';
-import { Star, BadgeCheck } from 'lucide-react';
+import { Star, BadgeCheck, ArrowLeft, ArrowRight } from 'lucide-react';
 import { REVIEWS, GOOGLE_REVIEW_URL, GOOGLE_API_KEY, GOOGLE_PLACE_ID } from '../constants';
 import { Button } from './ui/Button';
 
@@ -25,6 +25,8 @@ interface Review {
 export const Reviews: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>(REVIEWS);
   const [loading, setLoading] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const fetchGoogleReviews = async () => {
@@ -37,13 +39,6 @@ export const Reviews: React.FC = () => {
         // The Google Places API does not support CORS for client-side requests (browser -> google).
         // To make this work in production, you must route this request through a proxy server or 
         // your own backend API that hides the API key and handles CORS.
-        //
-        // Example URL structure with proxy: 
-        // const proxyUrl = "https://your-proxy-server.com/";
-        // const targetUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${GOOGLE_PLACE_ID}&fields=reviews&key=${GOOGLE_API_KEY}&language=nl`;
-        // const response = await fetch(proxyUrl + targetUrl);
-        
-        // For now, we define the direct URL. If this fails due to CORS, the catch block triggers the fallback.
         const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${GOOGLE_PLACE_ID}&fields=reviews&key=${GOOGLE_API_KEY}&language=nl`;
         
         const response = await fetch(url);
@@ -83,6 +78,29 @@ export const Reviews: React.FC = () => {
     fetchGoogleReviews();
   }, []);
 
+  const handleScroll = () => {
+    if (!scrollContainerRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+    if (scrollWidth === clientWidth) {
+      setScrollProgress(0);
+      return;
+    }
+    const progress = (scrollLeft / (scrollWidth - clientWidth)) * 100;
+    setScrollProgress(progress);
+  };
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (!scrollContainerRef.current) return;
+    const container = scrollContainerRef.current;
+    const scrollAmount = container.clientWidth * 0.85; 
+    const currentScroll = container.scrollLeft;
+    
+    container.scrollTo({
+        left: direction === 'left' ? currentScroll - scrollAmount : currentScroll + scrollAmount,
+        behavior: 'smooth'
+    });
+  };
+
   // Filter ONLY 5-star reviews (Applied to both manual and fetched data for safety)
   const displayReviews = reviews.filter(review => review.rating === 5);
 
@@ -110,8 +128,12 @@ export const Reviews: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex flex-nowrap overflow-x-auto pb-8 -mx-4 px-4 snap-x snap-mandatory gap-4 md:grid md:grid-cols-3 md:gap-6 lg:gap-8 relative min-h-[200px] md:overflow-visible md:pb-0 md:mx-0 md:px-0 no-scrollbar">
-        {/* Loading Overlay (Optional: only visible if fetching takes > 0ms and we want to show it) */}
+      <div 
+        ref={scrollContainerRef}
+        onScroll={handleScroll}
+        className="flex flex-nowrap overflow-x-auto pb-8 -mx-4 px-4 snap-x snap-mandatory gap-4 md:grid md:grid-cols-3 md:gap-6 lg:gap-8 relative min-h-[200px] md:overflow-visible md:pb-0 md:mx-0 md:px-0 no-scrollbar"
+      >
+        {/* Loading Overlay */}
         {loading && (
            <div className="absolute inset-0 bg-white/80 z-10 flex items-center justify-center">
              <div className="w-8 h-8 border-4 border-slate-200 border-t-primary rounded-full animate-spin"></div>
@@ -154,7 +176,41 @@ export const Reviews: React.FC = () => {
         ))}
       </div>
 
-      <div className="mt-0 md:mt-12 text-center">
+      {/* Mobile Scroll Controls */}
+      <div className="md:hidden flex items-center gap-4 mt-2 px-2">
+        <button
+          onClick={() => scroll('left')}
+          disabled={scrollProgress <= 1}
+          className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
+            scrollProgress <= 1
+              ? 'bg-slate-100 text-slate-300 cursor-not-allowed'
+              : 'bg-white text-primary border border-slate-200 shadow-sm hover:shadow-md active:scale-95'
+          }`}
+          aria-label="Scroll left"
+        >
+          <ArrowLeft size={20} />
+        </button>
+        <button
+          onClick={() => scroll('right')}
+          disabled={scrollProgress >= 99}
+          className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
+            scrollProgress >= 99
+              ? 'bg-slate-100 text-slate-300 cursor-not-allowed'
+              : 'bg-white text-primary border border-slate-200 shadow-sm hover:shadow-md active:scale-95'
+          }`}
+          aria-label="Scroll right"
+        >
+          <ArrowRight size={20} />
+        </button>
+        <div className="flex-1 h-1 bg-slate-200 rounded-full overflow-hidden ml-2">
+          <div 
+            className="h-full bg-primary transition-all duration-300 ease-out rounded-full"
+            style={{ width: `${Math.max(5, Math.min(100, scrollProgress))}%` }}
+          />
+        </div>
+      </div>
+
+      <div className="mt-8 md:mt-12 text-center">
          <Button 
             variant="outline" 
             onClick={() => window.open(GOOGLE_REVIEW_URL, '_blank')}

@@ -4,7 +4,7 @@ import { Sparkles, Building2, UserCheck, Wind, Droplets, PaintBucket } from 'luc
 // CONFIGURATION NOTE: Change this URL back to 'https://www.bbschoonmaakdiensten.nl' when going live.
 export const BASE_URL = 'https://bbschoonmaak.nul71.nl';
 
-export const DEFAULT_SEO_IMAGE = 'https://bbschoonmaak.nul71.nl/wp-content/uploads/2025/12/cropped-BB-Trans-from-Photopea.png';
+export const DEFAULT_SEO_IMAGE = '/BB_logo_trans.png';
 
 export const GOOGLE_REVIEW_URL = 'https://www.google.com/search?sca_esv=58ed6498840539ce&hl=en&sxsrf=AE3TifPR-yL9jvSRGMFl1gsr8wNATVzFSA:1767363116921&q=b%26b+schoonmaakdiensten+&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-EzFFYVXZ9bl9iNMNxVmR6uk1QYOulobS1-VFDTFh5L8SNiXxdPh75aEScjYXfJsiA9lqnaU%3D&uds=AOm0WdEpNcp6pEjRdta6g1dVDwXuGn2ASQc_i8vTEziX_JW1sIUObXA98RKHGaXP8clSBG20R8XKV7HEpBTK47PiKYX5ZTz0WlDrzP_wb4E8pysSdG5ta3Kl9JQZZxsSYNJiUdxQ8n9r&sa=X&ved=2ahUKEwiEtZfWhO2RAxUNzgIHHUNOANAQ3PALegQIQBAF&biw=2056&bih=1286&dpr=2';
 

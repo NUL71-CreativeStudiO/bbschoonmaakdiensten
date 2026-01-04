@@ -76,7 +76,7 @@ export const Navbar: React.FC<NavbarProps> = ({ mobileMenuOpen, setMobileMenuOpe
              handleNavClick(e, NAV_ITEMS[0]);
           }}>
             <img 
-              src="https://bbschoonmaak.nul71.nl/wp-content/uploads/2025/12/cropped-BB-Trans-from-Photopea.png" 
+              src="/BB_logo_trans.png" 
               alt="B&B Schoonmaakdiensten" 
               className={`transition-all duration-300 ${isScrolled || !isHome || mobileMenuOpen ? 'h-9 md:h-10' : 'h-10 md:h-14'} w-auto`}
             />

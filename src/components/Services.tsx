@@ -1,13 +1,39 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { Section } from './ui/Section';
 import { SERVICES } from '../constants';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ArrowLeft } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 export const Services: React.FC = () => {
   const location = useLocation();
   const isPage = location.pathname === '/diensten';
+  
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  const handleScroll = () => {
+    if (!scrollContainerRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+    if (scrollWidth === clientWidth) {
+      setScrollProgress(0);
+      return;
+    }
+    const progress = (scrollLeft / (scrollWidth - clientWidth)) * 100;
+    setScrollProgress(progress);
+  };
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (!scrollContainerRef.current) return;
+    const container = scrollContainerRef.current;
+    const scrollAmount = container.clientWidth * 0.85; 
+    const currentScroll = container.scrollLeft;
+    
+    container.scrollTo({
+        left: direction === 'left' ? currentScroll - scrollAmount : currentScroll + scrollAmount,
+        behavior: 'smooth'
+    });
+  };
 
   return (
     <Section id="services" className={`bg-slate-50 ${isPage ? 'pt-32' : ''}`}>
@@ -25,7 +51,11 @@ export const Services: React.FC = () => {
          Mobile: Horizontal Scroll (Flex) with no visible scrollbar
          Desktop: Grid
       */}
-      <div className="flex flex-nowrap overflow-x-auto pb-8 -mx-4 px-4 snap-x snap-mandatory gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-8 md:overflow-visible md:pb-0 md:mx-0 md:px-0 no-scrollbar">
+      <div 
+        ref={scrollContainerRef}
+        onScroll={handleScroll}
+        className="flex flex-nowrap overflow-x-auto pb-8 -mx-4 px-4 snap-x snap-mandatory gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-8 md:overflow-visible md:pb-0 md:mx-0 md:px-0 no-scrollbar"
+      >
         {SERVICES.map((service, index) => (
           <motion.div
             key={service.id}
@@ -60,9 +90,43 @@ export const Services: React.FC = () => {
           </motion.div>
         ))}
       </div>
+
+      {/* Mobile Scroll Controls */}
+      <div className="md:hidden flex items-center gap-4 mt-2 px-2">
+        <button
+          onClick={() => scroll('left')}
+          disabled={scrollProgress <= 1}
+          className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
+            scrollProgress <= 1
+              ? 'bg-slate-100 text-slate-300 cursor-not-allowed'
+              : 'bg-white text-primary border border-slate-200 shadow-sm hover:shadow-md active:scale-95'
+          }`}
+          aria-label="Scroll left"
+        >
+          <ArrowLeft size={20} />
+        </button>
+        <button
+          onClick={() => scroll('right')}
+          disabled={scrollProgress >= 99}
+          className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
+            scrollProgress >= 99
+              ? 'bg-slate-100 text-slate-300 cursor-not-allowed'
+              : 'bg-white text-primary border border-slate-200 shadow-sm hover:shadow-md active:scale-95'
+          }`}
+          aria-label="Scroll right"
+        >
+          <ArrowRight size={20} />
+        </button>
+        <div className="flex-1 h-1 bg-slate-200 rounded-full overflow-hidden ml-2">
+          <div 
+            className="h-full bg-primary transition-all duration-300 ease-out rounded-full"
+            style={{ width: `${Math.max(5, Math.min(100, scrollProgress))}%` }}
+          />
+        </div>
+      </div>
       
       {/* Bottom CTA */}
-      <div className="mt-6 md:mt-16 text-center">
+      <div className="mt-8 md:mt-16 text-center">
         <p className="text-slate-500 mb-2 md:mb-4 text-sm md:text-base">Staat uw gewenste dienst er niet tussen?</p>
         <Link to="/offerte-aanvragen" className="inline-block border-b-2 border-primary text-primary font-bold hover:text-primary-dark hover:border-primary-dark transition-colors pb-1">
           Neem contact op voor maatwerk &rarr;

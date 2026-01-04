@@ -3,10 +3,11 @@ import { Section } from './ui/Section';
 import { SERVICES } from '../constants';
 import { motion } from 'framer-motion';
 import { ArrowRight, ArrowLeft } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export const Services: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const isPage = location.pathname === '/diensten';
   
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -63,8 +64,10 @@ export const Services: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.1 }}
+            // Added onClick for navigation on entire card
+            onClick={() => navigate(`/diensten/${service.slug}`)}
             // Mobile: fixed width, snap alignment
-            className="min-w-[85vw] w-[85vw] md:min-w-0 md:w-auto flex-shrink-0 snap-center h-auto group bg-white rounded-xl p-6 md:p-8 shadow-soft hover:shadow-card transition-all duration-300 border-b-4 border-transparent hover:border-secondary relative overflow-hidden flex flex-col"
+            className="min-w-[85vw] w-[85vw] md:min-w-0 md:w-auto flex-shrink-0 snap-center h-auto group bg-white rounded-xl p-6 md:p-8 shadow-soft hover:shadow-card transition-all duration-300 border-b-4 border-transparent hover:border-secondary relative overflow-hidden flex flex-col cursor-pointer"
           >
             {/* Hover Background Blob */}
             <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/5 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
@@ -82,10 +85,11 @@ export const Services: React.FC = () => {
                 {service.description}
               </p>
 
-              <Link to={`/diensten/${service.slug}`} className="flex items-center gap-2 text-sm font-bold text-secondary cursor-pointer group-hover:translate-x-2 transition-transform inline-block mt-auto">
+              {/* Keeping the link visual, but the click is handled by the parent div */}
+              <div className="flex items-center gap-2 text-sm font-bold text-secondary group-hover:translate-x-2 transition-transform inline-block mt-auto">
                 <span>Meer informatie</span>
                 <ArrowRight size={16} />
-              </Link>
+              </div>
             </div>
           </motion.div>
         ))}

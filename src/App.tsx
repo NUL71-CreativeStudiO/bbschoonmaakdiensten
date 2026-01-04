@@ -26,18 +26,26 @@ const ScrollHandler = () => {
   const { pathname, state } = useLocation();
   const navType = useNavigationType();
 
-  // Save scroll position for the current path before navigating away
+  // 1. Save scroll position logic
   useEffect(() => {
+    // Disable browser's native scroll restoration to avoid conflicts
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
     const saveScrollPosition = () => {
+      // Use pathname as key
       sessionStorage.setItem(`scrollPosition_${pathname}`, window.scrollY.toString());
     };
 
-    window.addEventListener('scroll', saveScrollPosition);
+    // Use passive listener for better performance
+    window.addEventListener('scroll', saveScrollPosition, { passive: true });
     return () => window.removeEventListener('scroll', saveScrollPosition);
   }, [pathname]);
 
+  // 2. Scroll Restoration & Navigation Logic
   useEffect(() => {
-    // 1. Handle Scroll to Section (from Navbar)
+    // A. Internal Anchor Navigation (e.g. Navbar clicks)
     if (pathname === '/' && state && (state as any).targetId) {
       const targetId = (state as any).targetId;
       setTimeout(() => {
@@ -53,20 +61,21 @@ const ScrollHandler = () => {
         }
       }, 100);
     } 
-    // 2. Handle Back Navigation (Restore Scroll manually)
+    // B. Back Button / Swipe Navigation (POP)
     else if (navType === 'POP') {
       const savedPosition = sessionStorage.getItem(`scrollPosition_${pathname}`);
       if (savedPosition) {
-        // Use a small timeout to ensure DOM is ready
-        setTimeout(() => {
-          window.scrollTo({
-            top: parseInt(savedPosition, 10),
-            behavior: 'auto' // Instant jump for better UX on back
-          });
-        }, 50);
+        const yPos = parseInt(savedPosition, 10);
+        
+        // Attempt to scroll immediately
+        window.scrollTo(0, yPos);
+
+        // Retry after small delays to handle layout shifts/rendering
+        setTimeout(() => window.scrollTo(0, yPos), 50);
+        setTimeout(() => window.scrollTo(0, yPos), 200);
       }
     }
-    // 3. Handle New Navigation (Scroll to Top)
+    // C. New Navigation (PUSH/REPLACE) -> Scroll to Top
     else {
       window.scrollTo(0, 0);
     }

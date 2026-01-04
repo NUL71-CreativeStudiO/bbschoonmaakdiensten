@@ -6,8 +6,8 @@ import { Users, Award, ThumbsUp } from 'lucide-react';
 
 export const About: React.FC = () => {
   // Optimized images: 400px width is plenty for these columns
-  const img1 = "/BB_imager5.webp";
-  const img2 = "/BB_imager6.webp";
+  const img1 = "/BB_image5.webp";
+  const img2 = "/BB_image6.webp";
 
   return (
     <Section id="about" className="bg-white">

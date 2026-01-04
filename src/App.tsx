@@ -34,8 +34,12 @@ const ScrollHandler = () => {
     }
 
     const saveScrollPosition = () => {
-      // Use pathname as key
-      sessionStorage.setItem(`scrollPosition_${pathname}`, window.scrollY.toString());
+      try {
+        // Wrap in try-catch because sessionStorage access can fail in Incognito/Private modes
+        sessionStorage.setItem(`scrollPosition_${pathname}`, window.scrollY.toString());
+      } catch (e) {
+        // Silently fail if storage is not available
+      }
     };
 
     // Use passive listener for better performance
@@ -63,16 +67,21 @@ const ScrollHandler = () => {
     } 
     // B. Back Button / Swipe Navigation (POP)
     else if (navType === 'POP') {
-      const savedPosition = sessionStorage.getItem(`scrollPosition_${pathname}`);
-      if (savedPosition) {
-        const yPos = parseInt(savedPosition, 10);
-        
-        // Attempt to scroll immediately
-        window.scrollTo(0, yPos);
+      try {
+        const savedPosition = sessionStorage.getItem(`scrollPosition_${pathname}`);
+        if (savedPosition) {
+          const yPos = parseInt(savedPosition, 10);
+          
+          // Attempt to scroll immediately
+          window.scrollTo(0, yPos);
 
-        // Retry after small delays to handle layout shifts/rendering
-        setTimeout(() => window.scrollTo(0, yPos), 50);
-        setTimeout(() => window.scrollTo(0, yPos), 200);
+          // Retry after small delays to handle layout shifts/rendering
+          setTimeout(() => window.scrollTo(0, yPos), 50);
+          setTimeout(() => window.scrollTo(0, yPos), 200);
+        }
+      } catch (e) {
+        // If session storage fails, just scroll top as fallback
+        window.scrollTo(0, 0);
       }
     }
     // C. New Navigation (PUSH/REPLACE) -> Scroll to Top

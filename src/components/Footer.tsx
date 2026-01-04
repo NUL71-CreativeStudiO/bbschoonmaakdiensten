@@ -1,89 +1,116 @@
 import React from 'react';
-import { Section } from './ui/Section';
-import { ABOUT_TEXT } from '../constants';
-import { motion } from 'framer-motion';
-import { Users, Award, ThumbsUp } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
+import { Facebook, Linkedin, Instagram, MapPin, Phone, Mail, FileText } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-export const About: React.FC = () => {
-  const location = useLocation();
-  const isPage = location.pathname === '/over-ons';
+export const Footer: React.FC = () => {
+  const handleResetCookies = () => {
+    // Dispatch event to open CookieConsent immediately
+    window.dispatchEvent(new Event('bb-reset-cookie-consent'));
+  };
 
   return (
-    <Section id="about" className={`bg-white ${isPage ? 'pt-32' : ''}`}>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        
-        {/* Visual Content - Grid of Images */}
-        <div className="relative">
-            <div className="grid grid-cols-2 gap-4">
-              <motion.img 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+    <footer className="bg-slate-950 text-slate-400 py-12 border-t border-slate-900">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <div className="col-span-1">
+            <div className="flex items-center gap-3 mb-4">
+              <img 
                 src="/BB_logo_trans.png" 
-                className="rounded-2xl shadow-lg w-full h-64 object-cover mt-12"
-                alt="Clean office meeting room"
-                width="300"
-                height="256"
-                loading="lazy"
-                decoding="async"
+                alt="B&B Schoonmaakdiensten Logo" 
+                className="h-10 w-auto object-contain brightness-0 invert"
               />
-              <motion.img 
-                initial={{ opacity: 0, y: -20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                src="https://raw.githubusercontent.com/NUL71-CreativeStudiO/bbschoonmaakdiensten/refs/heads/main/public/images/BB_image5.png" 
-                className="rounded-2xl shadow-lg w-full h-64 object-cover"
-                alt="Cleaning professional"
-                width="300"
-                height="256"
-                loading="lazy"
-                decoding="async"
-              />
+              <span className="text-white font-heading font-bold text-xl tracking-tight">
+                Schoonmaakdiensten
+              </span>
             </div>
-            {/* Brand Circle */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded-full shadow-xl">
-               <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white font-heading font-bold text-xl">
-                 B&B
-               </div>
-            </div>
-        </div>
-
-        {/* Text Content */}
-        <div>
-          <span className="text-secondary font-bold uppercase tracking-wider text-sm">Over B&B Schoonmaakdiensten</span>
-          <h2 className="text-3xl md:text-4xl font-heading font-extrabold text-slate-900 mt-2 mb-6">
-            {ABOUT_TEXT.title}
-          </h2>
+            <p className="max-w-xs text-sm">
+              Professionele schoonmaakdiensten voor bedrijven en instellingen. Kwaliteit en betrouwbaarheid staan bij ons voorop.
+            </p>
+          </div>
           
-          <div className="prose prose-lg text-slate-600 mb-8">
-            <p className="mb-4">{ABOUT_TEXT.paragraph1}</p>
-            <p>{ABOUT_TEXT.paragraph2}</p>
+          <div>
+            <h4 className="text-white font-bold mb-4">Snel naar</h4>
+            <ul className="space-y-2 text-sm">
+              <li><Link to="/" className="hover:text-secondary transition-colors">Home</Link></li>
+              <li><Link to="/over-ons" className="hover:text-secondary transition-colors">Over Ons</Link></li>
+              <li><Link to="/diensten" className="hover:text-secondary transition-colors">Diensten</Link></li>
+              <li><Link to="/vacatures" className="hover:text-secondary transition-colors">Vacatures</Link></li>
+            </ul>
           </div>
 
-          {/* Trust Indicators: Horizontal Row on Mobile (Small), Grid on Desktop (Large) */}
-          <div className="bg-slate-50 rounded-2xl p-4 md:bg-transparent md:p-0 grid grid-cols-3 gap-2 md:gap-6">
-             {/* Item 1 */}
-             <div className="flex flex-col items-center justify-center text-center gap-2 md:bg-slate-50 md:rounded-lg md:p-4">
-                <Users className="text-primary shrink-0 w-6 h-6 md:w-8 md:h-8" />
-                <span className="font-bold text-slate-900 text-xs md:text-base leading-tight">Vast Team</span>
-             </div>
-             
-             {/* Item 2 */}
-             <div className="flex flex-col items-center justify-center text-center gap-2 md:bg-slate-50 md:rounded-lg md:p-4 border-l border-r border-slate-200 md:border-0 px-2 md:px-0">
-                <Award className="text-primary shrink-0 w-6 h-6 md:w-8 md:h-8" />
-                <span className="font-bold text-slate-900 text-xs md:text-base leading-tight">Gecertificeerd</span>
-             </div>
-             
-             {/* Item 3 */}
-             <div className="flex flex-col items-center justify-center text-center gap-2 md:bg-slate-50 md:rounded-lg md:p-4">
-                <ThumbsUp className="text-primary shrink-0 w-6 h-6 md:w-8 md:h-8" />
-                <span className="font-bold text-slate-900 text-xs md:text-base leading-tight">Betrouwbaar</span>
-             </div>
+          <div>
+             <h4 className="text-white font-bold mb-4">Contact</h4>
+             <ul className="space-y-3 text-sm">
+               <li className="flex items-start gap-3">
+                 <MapPin size={16} className="text-secondary shrink-0 mt-0.5" />
+                 <span>Facetlaan 35<br/>2665 NR Bleiswijk</span>
+               </li>
+               <li className="flex items-center gap-3">
+                 <Phone size={16} className="text-secondary shrink-0" />
+                 <a href="tel:0850473030" className="hover:text-white">085 - 047 30 30</a>
+               </li>
+               <li className="flex items-center gap-3">
+                 <Mail size={16} className="text-secondary shrink-0" />
+                 <a href="mailto:info@bbschoonmaakdiensten.nl" className="hover:text-white">info@bbschoonmaakdiensten.nl</a>
+               </li>
+               <li className="flex items-center gap-3">
+                 <FileText size={16} className="text-secondary shrink-0" />
+                 <span>KvK: 89348621</span>
+               </li>
+             </ul>
+          </div>
+
+          <div>
+            <h4 className="text-white font-bold mb-4">Volg ons</h4>
+            <div className="flex gap-4">
+              <a 
+                href="https://www.facebook.com/p/BB-Schoonmaakdiensten-61574751899880/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+              >
+                <Facebook size={18} />
+              </a>
+              <a 
+                href="https://www.linkedin.com/company/b-b-schoonmaakdiensten/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+              >
+                <Linkedin size={18} />
+              </a>
+              <a 
+                href="https://www.instagram.com/bbschoonmaakdiensten/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+              >
+                <Instagram size={18} />
+              </a>
+            </div>
           </div>
         </div>
-
+        
+        <div className="pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center text-sm gap-4">
+          <p>&copy; {new Date().getFullYear()} B&B Schoonmaakdiensten. Alle rechten voorbehouden.</p>
+          <div className="flex flex-wrap gap-4 md:gap-6 justify-center md:justify-end">
+            <Link to="/privacy" className="hover:text-white transition-colors">Privacyverklaring</Link>
+            <button 
+              type="button"
+              onClick={handleResetCookies}
+              className="hover:text-white transition-colors text-slate-400 cursor-pointer"
+            >
+              Cookie Instellingen
+            </button>
+            <Link 
+              to="/algemene-voorwaarden" 
+              className="hover:text-white transition-colors"
+            >
+              Algemene Voorwaarden
+            </Link>
+          </div>
+        </div>
       </div>
-    </Section>
+    </footer>
   );
 };

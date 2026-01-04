@@ -25,7 +25,7 @@ const HERO_SLIDES = [
   },
 ];
 
-const OPTIMIZED_BG = "https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=50&w=800&auto=format&fit=crop&fm=webp";
+const OPTIMIZED_BG = "/hero-bg.webp";
 
 export const Hero: React.FC = () => {
   const navigate = useNavigate();

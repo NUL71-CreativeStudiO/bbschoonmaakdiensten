@@ -59,7 +59,7 @@ export const ServiceDetail: React.FC = () => {
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <span className="text-secondary font-bold uppercase tracking-wider text-sm mb-2 block">Onze Expertise</span>
           {/* Updated Font Size & Word Breaking for Mobile */}
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-heading font-extrabold mb-6 break-words hyphens-auto">
+          <h1 className="text-xl sm:text-3xl md:text-5xl font-heading font-extrabold mb-6 break-words">
             {service.title}
           </h1>
           <p className="text-base md:text-xl text-blue-100 max-w-2xl leading-relaxed">{service.description}</p>

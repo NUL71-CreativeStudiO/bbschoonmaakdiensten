@@ -20,7 +20,7 @@ export const About: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                src="https://github.com/NUL71-CreativeStudiO/bbschoonmaakdiensten/blob/main/public/images/BB_image2.png?raw=true" 
+                src="/BB_image6.png" 
                 className="rounded-2xl shadow-lg w-full h-64 object-cover mt-12"
                 alt="Clean office meeting room"
               />
@@ -28,7 +28,7 @@ export const About: React.FC = () => {
                 initial={{ opacity: 0, y: -20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                src="https://raw.githubusercontent.com/NUL71-CreativeStudiO/bbschoonmaakdiensten/refs/heads/main/public/images/BB_image5.png" 
+                src="/BB_image5.png" 
                 className="rounded-2xl shadow-lg w-full h-64 object-cover"
                 alt="Cleaning professional"
               />

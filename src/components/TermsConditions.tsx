@@ -19,7 +19,7 @@ export const TermsConditions: React.FC = () => {
           <div className="border-b border-slate-100 pb-8 mb-8">
             <span className="text-secondary font-bold uppercase tracking-wider text-sm">Juridisch</span>
             {/* Updated Header Font Size */}
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-extrabold text-slate-900 mt-2 uppercase leading-tight break-words hyphens-auto">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-extrabold text-slate-900 mt-2 uppercase leading-tight break-words">
               Algemene Leveringsvoorwaarden<br />
               B&B Schoonmaakdiensten B.V.
             </h1>

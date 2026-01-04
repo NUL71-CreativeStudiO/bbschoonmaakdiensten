@@ -67,8 +67,8 @@ export const JobDetail: React.FC = () => {
             <span className="inline-block bg-secondary/10 text-secondary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
               Vacature
             </span>
-            {/* Updated Header Font Size */}
-            <h1 className="text-2xl sm:text-3xl md:text-5xl font-heading font-extrabold text-slate-900 mb-6 break-words hyphens-auto">
+            {/* Updated Header Font Size to text-xl to prevent breaking on mobile */}
+            <h1 className="text-xl sm:text-3xl md:text-5xl font-heading font-extrabold text-slate-900 mb-6 break-words">
               Schoonmaakmedewerker
             </h1>
             

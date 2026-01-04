@@ -29,7 +29,6 @@ const FALLBACK_IMAGES = [
   "https://images.unsplash.com/photo-1497366216548-37526070297c?q=60&w=800&auto=format&fit=crop"
 ];
 
-// Optimized background: smaller size, webp format, lower quality for BG context
 const OPTIMIZED_BG = "https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=50&w=1200&auto=format&fit=crop&fm=webp";
 
 export const Hero: React.FC = () => {
@@ -52,7 +51,7 @@ export const Hero: React.FC = () => {
     // Updated min-h to svh (Small Viewport Height) for better mobile browser support
     <div id="home" className="relative w-full min-h-[100svh] md:min-h-[92vh] flex items-center bg-slate-50 pt-20 lg:pt-0 z-20 overflow-hidden">
       
-      {/* 1. BACKGROUND: Office Company Faded + Blue Tint for Water Drop Theme */}
+      {/* 1. BACKGROUND */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <motion.div 
           initial={{ opacity: 0 }}
@@ -66,15 +65,12 @@ export const Hero: React.FC = () => {
               className="w-full h-full object-cover opacity-30"
               width="1200"
               height="800"
-              // Background image is important for atmosphere but LCP is usually text/slide
               loading="eager" 
               decoding="async"
             />
-            {/* Blue tint to suit the waterdrop */}
             <div className="absolute inset-0 bg-blue-900/10 mix-blend-color"></div>
         </motion.div>
         
-        {/* Gradients */}
         <div className="absolute inset-0 bg-gradient-to-r from-slate-50/95 via-slate-50/70 to-slate-50/30"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/40 to-slate-50"></div>
       </div>
@@ -83,14 +79,12 @@ export const Hero: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           
           {/* LEFT: Typography & CTA */}
-          {/* Changed order: Text first on mobile (order-1), then Image (order-2) */}
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="order-1 lg:order-1 max-w-xl mx-auto lg:mx-0 text-center lg:text-left pt-6 lg:pt-0"
           >
-            {/* Tagline */}
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 border border-slate-200 backdrop-blur-sm shadow-sm mb-6 lg:mb-8">
                <span className="w-1.5 h-1.5 rounded-full bg-secondary"></span>
                <span className="text-xs font-bold text-slate-500 tracking-wider uppercase">Schoonmaak & Onderhoud</span>
@@ -127,7 +121,6 @@ export const Hero: React.FC = () => {
               </Button>
             </div>
 
-            {/* Trust Indicators */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-2 md:gap-8">
                <div className="flex items-center gap-2">
                  <div className="bg-green-100 p-1 rounded-full">
@@ -145,30 +138,26 @@ export const Hero: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* RIGHT: WATER DROP IMAGE CONTAINER */}
+          {/* RIGHT: IMAGE CONTAINER */}
           <div className="hidden md:flex order-2 lg:order-2 justify-center lg:justify-end items-center py-4 lg:py-0">
              
-             {/* The Drop Shape Wrapper */}
              <motion.div 
                initial={{ opacity: 0, scale: 0.8 }}
                animate={{ opacity: 1, scale: 1 }}
                transition={{ duration: 1.2, delay: 0.2, type: "spring", stiffness: 50 }}
-               // Adjusted size for mobile: w-[280px] instead of larger default
                className="relative w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] md:w-[450px] md:h-[450px]"
              >
-                {/* Background Glow */}
                 <div className="absolute inset-4 bg-primary/30 blur-3xl rounded-full transform translate-y-8"></div>
 
-                {/* THE DROP CONTAINER */}
                 <motion.div 
                    animate={{ 
                      y: [0, -15, 0],
-                     rotate: 45 // Enforce 45deg rotation during animation
+                     rotate: 45 
                    }}
                    initial={{ rotate: 45 }}
                    transition={{ 
                      y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
-                     rotate: { duration: 0 } // Static rotation
+                     rotate: { duration: 0 } 
                    }}
                    className="relative w-full h-full overflow-hidden bg-blue-50 border-4 border-white/50"
                    style={{
@@ -181,12 +170,6 @@ export const Hero: React.FC = () => {
                    }}
                 >
                     <AnimatePresence mode="wait">
-                       {/* 
-                         PERFORMANCE: This is likely the LCP element on desktop.
-                         1. Use explicit width/height to reserve space (avoid CLS)
-                         2. Use fetchPriority="high" for the first image
-                         3. decoding="async"
-                       */}
                        <motion.img 
                           key={currentSlideIndex}
                           src={imgError ? FALLBACK_IMAGES[0] : HERO_SLIDES[currentSlideIndex].src}
@@ -194,9 +177,10 @@ export const Hero: React.FC = () => {
                           alt="Schoonmaak"
                           width="450"
                           height="450"
-                          // Use high priority ONLY for the very first render, otherwise auto
+                          // Critical LCP Fix: High priority for first image
                           fetchPriority={currentSlideIndex === 0 ? "high" : "auto"}
-                          initial={{ opacity: 0, rotate: -45, scale: 1.5 }}
+                          // Critical LCP Fix: No initial fade-in for the first slide to speed up paint
+                          initial={currentSlideIndex === 0 ? { opacity: 1, rotate: -45, scale: 1.5 } : { opacity: 0, rotate: -45, scale: 1.5 }}
                           animate={{ opacity: 1, rotate: -45, scale: 1.5 }}
                           exit={{ opacity: 0, rotate: -45, scale: 1.5 }}
                           transition={{ duration: 1.5 }} 
@@ -205,7 +189,6 @@ export const Hero: React.FC = () => {
                        />
                     </AnimatePresence>
 
-                    {/* GLOSS / REFLECTION OVERLAY */}
                     <div 
                         className="absolute inset-0 pointer-events-none z-10"
                         style={{
@@ -214,11 +197,9 @@ export const Hero: React.FC = () => {
                         }}
                     ></div>
                     
-                    {/* Specular Highlight */}
                     <div className="absolute top-8 left-8 w-32 h-32 bg-gradient-to-br from-white to-transparent opacity-60 rounded-full blur-2xl filter transform -translate-x-1/4 -translate-y-1/4"></div>
                 </motion.div>
 
-                {/* Floating Info Badge - NEW DESIGN */}
                 <motion.div 
                    key={`info-${currentSlideIndex}`}
                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -247,14 +228,12 @@ export const Hero: React.FC = () => {
         </div>
       </div>
 
-      {/* --- BOTTOM WAVE TRANSITION (Kept Static) --- */}
       <div className="absolute bottom-0 left-0 right-0 z-50 pointer-events-none">
         <svg 
           className="relative w-full h-12 md:h-16 lg:h-24 text-white fill-current block z-10" 
           viewBox="0 0 1440 120" 
           preserveAspectRatio="none"
         >
-          {/* Smooth liquid wave */}
           <path d="M0,64L80,58.7C160,53,320,43,480,48C640,53,800,75,960,80C1120,85,1280,75,1360,69.3L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path>
         </svg>
       </div>

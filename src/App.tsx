@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation, useNavigationType } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Navbar } from './components/Navbar';
@@ -25,31 +25,41 @@ import { BASE_URL, DEFAULT_SEO_IMAGE } from './constants';
 const ScrollHandler = () => {
   const { pathname, state } = useLocation();
   const navType = useNavigationType();
+  const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // 1. Save scroll position logic
+  // 1. Save scroll position logic (Debounced)
   useEffect(() => {
-    // Disable browser's native scroll restoration to avoid conflicts
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
 
     const saveScrollPosition = () => {
-      try {
-        // Wrap in try-catch because sessionStorage access can fail in Incognito/Private modes
-        sessionStorage.setItem(`scrollPosition_${pathname}`, window.scrollY.toString());
-      } catch (e) {
-        // Silently fail if storage is not available
+      // Clear existing timeout to debounce execution
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
       }
+
+      // Only save to storage once every 200ms of inactivity
+      scrollTimeoutRef.current = setTimeout(() => {
+        try {
+          sessionStorage.setItem(`scrollPosition_${pathname}`, window.scrollY.toString());
+        } catch (e) {
+          // Fail silently
+        }
+      }, 200);
     };
 
-    // Use passive listener for better performance
     window.addEventListener('scroll', saveScrollPosition, { passive: true });
-    return () => window.removeEventListener('scroll', saveScrollPosition);
+    
+    return () => {
+      window.removeEventListener('scroll', saveScrollPosition);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    };
   }, [pathname]);
 
   // 2. Scroll Restoration & Navigation Logic
   useEffect(() => {
-    // A. Internal Anchor Navigation (e.g. Navbar clicks)
+    // A. Internal Anchor Navigation
     if (pathname === '/' && state && (state as any).targetId) {
       const targetId = (state as any).targetId;
       setTimeout(() => {
@@ -71,20 +81,15 @@ const ScrollHandler = () => {
         const savedPosition = sessionStorage.getItem(`scrollPosition_${pathname}`);
         if (savedPosition) {
           const yPos = parseInt(savedPosition, 10);
-          
-          // Attempt to scroll immediately
           window.scrollTo(0, yPos);
-
-          // Retry after small delays to handle layout shifts/rendering
-          setTimeout(() => window.scrollTo(0, yPos), 50);
-          setTimeout(() => window.scrollTo(0, yPos), 200);
+          // Small retry for heavy pages
+          requestAnimationFrame(() => window.scrollTo(0, yPos));
         }
       } catch (e) {
-        // If session storage fails, just scroll top as fallback
         window.scrollTo(0, 0);
       }
     }
-    // C. New Navigation (PUSH/REPLACE) -> Scroll to Top
+    // C. New Navigation -> Top
     else {
       window.scrollTo(0, 0);
     }

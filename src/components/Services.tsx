@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import { Section } from './ui/Section';
 import { SERVICES } from '../constants';
 import { motion } from 'framer-motion';
@@ -12,17 +12,32 @@ export const Services: React.FC = () => {
   
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  
+  // Use a ref to throttle the scroll event
+  const ticking = useRef(false);
 
-  const handleScroll = () => {
-    if (!scrollContainerRef.current) return;
-    const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-    if (scrollWidth === clientWidth) {
-      setScrollProgress(0);
-      return;
+  const handleScroll = useCallback(() => {
+    if (!ticking.current) {
+      window.requestAnimationFrame(() => {
+        if (!scrollContainerRef.current) {
+            ticking.current = false;
+            return;
+        }
+        
+        const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+        if (scrollWidth === clientWidth) {
+          setScrollProgress(0);
+        } else {
+          const progress = (scrollLeft / (scrollWidth - clientWidth)) * 100;
+          setScrollProgress(progress);
+        }
+        
+        ticking.current = false;
+      });
+
+      ticking.current = true;
     }
-    const progress = (scrollLeft / (scrollWidth - clientWidth)) * 100;
-    setScrollProgress(progress);
-  };
+  }, []);
 
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollContainerRef.current) return;

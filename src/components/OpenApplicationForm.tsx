@@ -84,26 +84,28 @@ export const OpenApplicationForm: React.FC = () => {
   return (
     <div className="pt-24 min-h-screen bg-slate-50">
       <Section id="open-application-form" noPadding>
-        <div className="container mx-auto px-4 md:px-6 py-12 max-w-3xl">
+        <div className="container mx-auto px-4 md:px-6 py-8 md:py-12 max-w-3xl">
           
           <button 
             onClick={() => navigate('/', { state: { targetId: 'vacancies' } })}
-            className="flex items-center gap-2 text-slate-500 hover:text-primary mb-8 font-medium transition-colors"
+            className="flex items-center gap-2 text-slate-500 hover:text-primary mb-6 md:mb-8 font-medium transition-colors"
           >
             <ArrowLeft size={20} />
             Terug naar vacatures
           </button>
 
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <div className="bg-primary text-white p-8 md:p-10">
+            {/* Header: reduced padding on mobile */}
+            <div className="bg-primary text-white p-5 md:p-10">
               <span className="inline-block bg-secondary/20 text-secondary-light px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
                 Open Sollicitatie
               </span>
-              <h1 className="text-3xl font-heading font-extrabold mb-2">Jouw Toekomst bij B&B</h1>
-              <p className="text-blue-100">Staat jouw droombaan er niet tussen? Vertel ons wat je zoekt.</p>
+              <h1 className="text-2xl md:text-3xl font-heading font-extrabold mb-2 break-words">Jouw Toekomst bij B&B</h1>
+              <p className="text-blue-100 text-sm md:text-base">Staat jouw droombaan er niet tussen? Vertel ons wat je zoekt.</p>
             </div>
 
-            <div className="p-8 md:p-10">
+            {/* Body: reduced padding on mobile */}
+            <div className="p-5 md:p-10">
               <AnimatePresence mode="wait">
                 {isSubmitted ? (
                   <motion.div 
@@ -115,8 +117,8 @@ export const OpenApplicationForm: React.FC = () => {
                     <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-6 shadow-sm">
                       <CheckCircle size={48} />
                     </div>
-                    <h2 className="text-3xl font-bold text-slate-900 mb-4">Bedankt voor je interesse!</h2>
-                    <p className="text-slate-600 max-w-md mb-8 text-lg">
+                    <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">Bedankt voor je interesse!</h2>
+                    <p className="text-slate-600 max-w-md mb-8 text-base md:text-lg">
                       We hebben je open sollicitatie ontvangen. We zullen kijken of er passende mogelijkheden zijn en nemen contact met je op.
                     </p>
                     <Button onClick={() => navigate('/')} variant="outline">
@@ -129,12 +131,12 @@ export const OpenApplicationForm: React.FC = () => {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onSubmit={handleSubmit(onSubmit)} 
-                    className="space-y-6"
+                    className="space-y-4 md:space-y-6"
                   >
                     {/* Honeypot Field (Hidden) */}
                     <input type="text" className="hidden" tabIndex={-1} autoComplete="off" {...register("_honey")} />
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                       <div>
                         <label className="block text-sm font-bold text-slate-700 mb-2">Volledige Naam <span className="text-red-500">*</span></label>
                         <input 
@@ -161,7 +163,7 @@ export const OpenApplicationForm: React.FC = () => {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                       <div>
                         <label className="block text-sm font-bold text-slate-700 mb-2">Emailadres <span className="text-red-500">*</span></label>
                         <input 

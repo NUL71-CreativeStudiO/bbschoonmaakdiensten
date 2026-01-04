@@ -7,19 +7,19 @@ import { useNavigate } from 'react-router-dom';
 // Optimized Images via Weserv CDN (Converts to WebP, Resizes, Compresses)
 const HERO_SLIDES = [
   { 
-    src: "/BB_image1.png&w=1000&h=1000&fit=cover&q=80&output=webp",
+    src: "/BB_image1.png?w=1000&h=1000&fit=cover&q=80&output=webp",
     title: "Professioneel Team",
     subtitle: "Vakkundig en gecertificeerd.",
     icon: Users
   },
   { 
-    src: "/BB_image3.png&w=1000&h=1000&fit=cover&q=80&output=webp",
+    src: "/BB_image3.png?w=1000&h=1000&fit=cover&q=80&output=webp",
     title: "Representatieve Entrees",
     subtitle: "Een perfecte eerste indruk.",
     icon: Building2
   },
   { 
-    src: "/BB_image4.png&w=1000&h=1000&fit=cover&q=80&output=webp",
+    src: "/BB_image4.png?w=1000&h=1000&fit=cover&q=80&output=webp",
     title: "Grondige Reiniging",
     subtitle: "Oog voor elk detail.",
     icon: Sparkles

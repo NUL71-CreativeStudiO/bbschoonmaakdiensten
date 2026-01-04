@@ -11,7 +11,7 @@ interface NavbarProps {
 }
 
 // Optimized Logo
-const LOGO_URL = "/BB_logo_trans.png&w=120&h=120&fit=contain&output=webp";
+const LOGO_URL = "/BB_logo_trans.png?w=120&h=120&fit=contain&output=webp";
 
 export const Navbar: React.FC<NavbarProps> = ({ mobileMenuOpen, setMobileMenuOpen }) => {
   const [isScrolled, setIsScrolled] = useState(false);

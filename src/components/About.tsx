@@ -10,8 +10,8 @@ export const About: React.FC = () => {
   const isPage = location.pathname === '/over-ons';
 
   // Optimized image URLs via weserv.nl
-  const img1 = "/BB_image5.png&w=600&h=512&fit=cover&q=80&output=webp";
-  const img2 = "/BB_image6.png&w=600&h=512&fit=cover&q=80&output=webp";
+  const img1 = "/BB_image5.png?w=600&h=512&fit=cover&q=80&output=webp";
+  const img2 = "/BB_image6.png?w=600&h=512&fit=cover&q=80&output=webp";
 
   return (
     <Section id="about" className={`bg-white ${isPage ? 'pt-32' : ''}`}>

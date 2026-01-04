@@ -26,8 +26,11 @@ const HERO_SLIDES = [
 ];
 
 const FALLBACK_IMAGES = [
-  "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1000&auto=format&fit=crop"
+  "https://images.unsplash.com/photo-1497366216548-37526070297c?q=60&w=800&auto=format&fit=crop"
 ];
+
+// Optimized background: smaller size, webp format, lower quality for BG context
+const OPTIMIZED_BG = "https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=50&w=1200&auto=format&fit=crop&fm=webp";
 
 export const Hero: React.FC = () => {
   const navigate = useNavigate();
@@ -58,9 +61,14 @@ export const Hero: React.FC = () => {
           className="absolute inset-0"
         >
             <img 
-            src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=2000&auto=format&fit=crop" 
-            alt="Office Background" 
-            className="w-full h-full object-cover opacity-30"
+              src={OPTIMIZED_BG}
+              alt="Kantoor Achtergrond" 
+              className="w-full h-full object-cover opacity-30"
+              width="1200"
+              height="800"
+              // Background image is important for atmosphere but LCP is usually text/slide
+              loading="eager" 
+              decoding="async"
             />
             {/* Blue tint to suit the waterdrop */}
             <div className="absolute inset-0 bg-blue-900/10 mix-blend-color"></div>
@@ -173,11 +181,21 @@ export const Hero: React.FC = () => {
                    }}
                 >
                     <AnimatePresence mode="wait">
+                       {/* 
+                         PERFORMANCE: This is likely the LCP element on desktop.
+                         1. Use explicit width/height to reserve space (avoid CLS)
+                         2. Use fetchPriority="high" for the first image
+                         3. decoding="async"
+                       */}
                        <motion.img 
                           key={currentSlideIndex}
                           src={imgError ? FALLBACK_IMAGES[0] : HERO_SLIDES[currentSlideIndex].src}
                           onError={() => setImgError(true)}
                           alt="Schoonmaak"
+                          width="450"
+                          height="450"
+                          // Use high priority ONLY for the very first render, otherwise auto
+                          fetchPriority={currentSlideIndex === 0 ? "high" : "auto"}
                           initial={{ opacity: 0, rotate: -45, scale: 1.5 }}
                           animate={{ opacity: 1, rotate: -45, scale: 1.5 }}
                           exit={{ opacity: 0, rotate: -45, scale: 1.5 }}

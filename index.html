@@ -6,8 +6,15 @@
     <title>B&B Schoonmaakdiensten | Professioneel & Betrouwbaar</title>
     <meta name="description" content="B&B Schoonmaakdiensten - Uw partner voor professionele schoonmaak, glasbewassing en vloeronderhoud." />
     <meta name="theme-color" content="#004B8D" />
+    
+    <!-- Performance Optimization: Preconnect to critical domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://esm.sh">
+    <link rel="dns-prefetch" href="https://esm.sh">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="preconnect" href="https://raw.githubusercontent.com">
+
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -52,6 +59,15 @@
         -moz-osx-font-smoothing: grayscale;
         overflow-x: hidden;
         width: 100%;
+        /* Prevent CLS on font load */
+        font-family: 'Open Sans', sans-serif; 
+      }
+      /* Prevent Image CLS defaults */
+      img {
+        max-width: 100%;
+        height: auto;
+        font-style: italic; /* Shows alt text better while loading */
+        vertical-align: middle;
       }
       .clip-wave-bottom {
         clip-path: ellipse(150% 100% at 50% 0%);
@@ -86,10 +102,8 @@
   }
 }
 </script>
-<link rel="stylesheet" href="src/index.css">
 </head>
   <body class="bg-white text-slate-700">
     <div id="root"></div>
-  <script type="module" src="src/index.tsx"></script>
-</body>
+  </body>
 </html>
